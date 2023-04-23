@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.6.1",
+    "@supabase/auth-helpers-react": "^0.3.1",
+    "@supabase/supabase-js": "^2.21.0",
     "autoprefixer": "10.4.14",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.3",
