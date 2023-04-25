@@ -66,19 +66,21 @@ export const getServerSideProps = async (ctx) => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
-  if (session)
+  if (session) {
+    console.log("the user is authenticated");
     return {
       redirect: {
         destination: "/",
         permanent: false,
       },
     };
-
+  }
+console.log(session);
   return {
     props: {
-      initialSession: session,
-      user: session.user,
+      jiji: "jiji"
+      // initialSession: session,
+      // user: session.user,
     },
   };
 };

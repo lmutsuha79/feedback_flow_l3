@@ -4,7 +4,9 @@ export default function Profile({ user }) {
   return (
     <div>
       Hello {user.email} <div> only logined users can see this </div>
-      <div></div>
+      <div>
+            
+      </div>
     </div>
   );
 }
