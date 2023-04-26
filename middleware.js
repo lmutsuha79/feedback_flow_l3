@@ -21,7 +21,7 @@ export async function middleware(req, res) {
       console.log("no uesr");
       return NextResponse.redirect(new URL("/auth/login", req.url));
     }
-    console.log("the user = ", session.user);
+    console.log("the user = ", session.user.email);
   }
   return NextResponse.next();
 }

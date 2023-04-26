@@ -2,33 +2,32 @@ import { Button, Modal, Tooltip } from "flowbite-react";
 import ProfileDropDown from "./layout-components/profile-drop-down";
 import SelectAppDropDown from "./layout-components/select-app-drop";
 import TopNav from "./layout-components/top-nav";
-import { useEffect, useState } from "react";
+import { useUser } from "@supabase/auth-helpers-react";
+import LoadingScreen from "../ui/loading-screen";
 
 const DashboardLayout = (props) => {
-  const [isLoading, setIsLoading] = useState(true);
-  // useEffect(() => {
-  //   // check if the user is logged in else 
-  // });
+  const user = useUser();
 
-  if (isLoading) {
-    return <div>loading ....</div>;
-  }
+  if (user) {
+    return (
+      <>
+        <LoadingScreen />
+        <div className="container pt-4">
+          <div className="border border-slate-200 rounded-md">
+            <header className="h-[64px]">
+              <div className="p-2 flex items-center justify-between">
+                <SelectAppDropDown />
 
-  return (
-    <div className="container pt-4">
-      <div className="border border-slate-200 rounded-md">
-        <header className="h-[64px]">
-          <div className="p-2 flex items-center justify-between">
-            <SelectAppDropDown />
+                <TopNav />
 
-            <TopNav />
-
-            <ProfileDropDown />
+                <ProfileDropDown userInfo={user.user_metadata} />
+              </div>
+            </header>
           </div>
-        </header>
-      </div>
-    </div>
-  );
+        </div>
+      </>
+    );
+  }
 };
 
 export default DashboardLayout;

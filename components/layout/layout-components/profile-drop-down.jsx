@@ -1,6 +1,5 @@
+import { supabase } from "@/lib/supabaseClient";
 import {
-  faAdd,
-  faArrowsUpDown,
   faGear,
   faPerson,
   faSignOut,
@@ -8,26 +7,38 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Avatar, Dropdown } from "flowbite-react";
+import { useRouter } from "next/router";
 
-const ProfileDropDown = () => {
+const ProfileDropDown = ({ userInfo }) => {
+  console.log(userInfo);
+  const router = useRouter();
+  const supabaseClient = useSupabaseClient();
+
+  const handleLogout = async () => {
+    const { err } = await supabaseClient.auth.signOut();
+    if (err) {
+      console;
+      return;
+    }
+    console.log("user logged out");
+    router.push("/auth/login");
+  };
+
   return (
     <div className="flex justify-end">
       <Dropdown
         label={
-          <Avatar
-            alt="User settings"
-            img="https://yasser-dev-app.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile2.3be28eea.png&w=1920&q=75"
-            rounded={true}
-          />
+          <Avatar alt="User settings" img={userInfo.picture} rounded={true} />
         }
         arrowIcon={false}
         inline={true}
       >
         <Dropdown.Header>
-          <span className="block text-sm">Khelil Yasser</span>
+          <span className="block text-sm">{userInfo.full_name}</span>
           <span className="block truncate text-sm font-medium">
-            khelilyasser79@gmail.com
+            {userInfo.email}
           </span>
         </Dropdown.Header>
         <Dropdown.Item>
@@ -52,7 +63,7 @@ const ProfileDropDown = () => {
         <Dropdown.Item>
           <div className="flex items-center gap-2">
             <FontAwesomeIcon icon={faSignOut} />
-            <span>Log Out</span>
+            <span onClick={handleLogout}>Log Out</span>
           </div>
         </Dropdown.Item>{" "}
       </Dropdown>

@@ -1,13 +1,26 @@
 import DropdownMenuDemo from "@/components/ui/drop-down-menu";
-import { useUser } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+  const supabaseClient = useSupabaseClient();
   const user = useUser();
-  
-  console.log(user?.email);
+
+  const handleLogout = async () => {
+    const { err } = await supabaseClient.auth.signOut();
+    if (err) {
+      console;
+      return;
+    }
+    console.log("user logged out");
+    router.push("/auth/login");
+  };
+
   return (
     <main>
       <h1>helllo wrold</h1>
+      <button onClick={handleLogout}>logout</button>
       <DropdownMenuDemo />
     </main>
   );
