@@ -1,6 +1,5 @@
 import DropdownMenuDemo from "@/components/ui/drop-down-menu";
 import { useUser } from "@supabase/auth-helpers-react";
-import Image from "next/image";
 
 export default function Home() {
   const user = useUser();
