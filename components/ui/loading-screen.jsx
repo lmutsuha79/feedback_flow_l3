@@ -1,13 +1,14 @@
-import { useEffect } from "react";
-import { TimelineMax, TweenMax } from "gsap";
-import ShearedRectangles from "./sheared-rectangles ";
-
 const LoadingScreen = () => {
- 
   return (
-    <div className="bg-black w-screen h-screen fixed top-0 left-0 z-[99]">
-      <ShearedRectangles />
-    </div>
+    // <div className="w-screen h-screen fixed z-[99] ">
+      <div className="bg-black/80 w-screen h-screen fixed top-0 left-0 z-[99] grid place-items-center">
+        <div id="loader">
+          <div id="box"></div>
+          <div id="hill"></div>
+        </div>
+        <p id="loading_screen_text">Loading ...</p>
+      </div>
+    // </div>
   );
 };
 
