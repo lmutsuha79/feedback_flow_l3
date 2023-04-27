@@ -17,9 +17,12 @@ export default function Home() {
     router.push("/auth/login");
   };
 
+
+
   return (
     <main>
       <h1>helllo wrold</h1>
+      <div>is loading = {}</div>
       <button onClick={handleLogout}>logout</button>
       <DropdownMenuDemo />
     </main>

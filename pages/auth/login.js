@@ -2,7 +2,6 @@ import BackHomeBtn from "@/components/auth-components/back-home";
 import GoogleBtn from "@/components/auth-components/google-btn";
 import { supabase } from "@/lib/supabaseClient";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { Button } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -70,15 +69,15 @@ export const getServerSideProps = async (ctx) => {
     console.log("the user is authenticated");
     return {
       redirect: {
-        destination: "/",
+        destination: "/dashboard",
         permanent: false,
       },
     };
   }
-console.log(session);
+  console.log(session);
   return {
     props: {
-      jiji: "jiji"
+      jiji: "jiji",
       // initialSession: session,
       // user: session.user,
     },
