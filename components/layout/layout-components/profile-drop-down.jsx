@@ -17,7 +17,7 @@ import { Avatar, Dropdown } from "flowbite-react";
 import { useRouter } from "next/router";
 
 const ProfileDropDown = ({ userInfo }) => {
-  // console.log(userInfo);
+  // console.log("profile deop down rerender");
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
 

@@ -14,8 +14,7 @@ The project idea is to create a web application that helps app owners on Google 
 - the problem of logout --> (ok)
 - add a loading screen to the dashboard --> (ok)
 - add toast notifications to the app --> (ok)
-- list the apps of the user in the navbar and let the user select the app.
-
+- list the apps of the user in the navbar and let the user select the app. --> (ok)
 - display the data of the app in the dashboard
 
 ## up upcoming features
