@@ -55,8 +55,8 @@ const SelectAppDropDown = () => {
             </div>
           </Dropdown.Item>{" "}
           <Dropdown.Divider />
-          <Dropdown.Item>
-            <div onClick={showModal} className="flex items-center gap-2">
+          <Dropdown.Item onClick={showModal}>
+            <div className="flex items-center gap-2">
               <FontAwesomeIcon icon={faAdd} />
               <span>Add New App</span>
             </div>

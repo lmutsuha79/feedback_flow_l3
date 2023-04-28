@@ -15,6 +15,9 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { useState } from "react";
 import LoadingScreen from "@/components/ui/loading-screen";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 // Tell Font Awesome to skip adding the CSS automatically
 // since it's already imported above
 config.autoAddCss = false;
@@ -33,6 +36,8 @@ export default function App({ Component, pageProps }) {
       supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
+      <ToastContainer />
+
       <LoadingScreen />
 
       <div id="app_wrapper_none_loading_screen" className="w-screen h-screen">

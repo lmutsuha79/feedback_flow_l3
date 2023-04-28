@@ -1,20 +1,44 @@
+import {
+  turnOffLoadinScreen,
+  turnOnLoadingScreen,
+} from "@/util/loadingFunctions";
+import { error_toast, sucess_toast } from "@/util/toastNotification";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal, Tooltip } from "flowbite-react";
+import { toast } from "react-toastify";
 
 const AddNewAppId = ({ isActive, close }) => {
   async function submitAddingNewApp() {
-    const appId = document.getElementById("appId").value;
-    const res = await fetch("/api/get-app-info", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        appId,
-      }),
-    });
+    turnOnLoadingScreen();
 
-    const data = await res.json();
-    console.log(data);
+    try {
+      const appId = document.getElementById("appId").value.trim();
+      if (appId == "") {
+        throw new Error("please entre a valid app id ");
+      }
+      const res = await fetch("/api/get-app-info", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          appId,
+        }),
+      });
+
+      if (res.status === 400) {
+        const { err } = await res.json();
+        console.log(err);
+        throw new Error(err);
+      }
+      const data = await res.json();
+      console.log(data);
+      sucess_toast("your new app was added successfully");
+      close();
+    } catch (err) {
+      console.log("the error from catch is " + err);
+      error_toast(err.toString());
+    }
+    turnOffLoadinScreen();
   }
   return (
     <Modal show={isActive} size="md" popup={true} onClose={close}>

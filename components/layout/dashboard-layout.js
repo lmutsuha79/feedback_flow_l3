@@ -3,6 +3,7 @@ import ProfileDropDown from "./layout-components/profile-drop-down";
 import SelectAppDropDown from "./layout-components/select-app-drop";
 import TopNav from "./layout-components/top-nav";
 import { useUser } from "@supabase/auth-helpers-react";
+import { notify } from "@/pages/_app";
 
 const DashboardLayout = (props) => {
   console.log("the dashboard layout is rendered");
@@ -18,7 +19,7 @@ const DashboardLayout = (props) => {
             <header className="h-[64px]">
               <div className="p-2 flex items-center justify-between">
                 <SelectAppDropDown />
-
+                <button onClick={notify}>click me</button>
                 <TopNav />
 
                 <ProfileDropDown userInfo={user.user_metadata} />
