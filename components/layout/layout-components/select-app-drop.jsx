@@ -9,8 +9,7 @@ const SelectAppDropDown = ({
   selectedAppIndex,
   setSelectedAppIndex,
 }) => {
-  // console.log(JSON.parse(apps_of_user[0].info))
-  console.log("slect app render");
+  // console.log("slect app render");
   const [ModalStatus, setModalStatus] = useState(false);
   const showModal = () => {
     setModalStatus(true);
@@ -20,11 +19,12 @@ const SelectAppDropDown = ({
   };
   return (
     <>
-      {/* {console.log(JSON.parse(apps_of_user[selectedAppIndex].info))} */}
-      {apps_of_user[selectedAppIndex] &&
-        console.log(JSON.parse(apps_of_user[selectedAppIndex].info))}
-
-      <AddNewAppId isActive={ModalStatus} close={closeModal} />
+      <AddNewAppId
+        setSelectedAppIndex={setSelectedAppIndex}
+        numberOfApps={apps_of_user.length}
+        isActive={ModalStatus}
+        close={closeModal}
+      />
 
       <div className="text-main_dark rounded-md p-2 hover:bg-blue_gray transition-colors flex gap-8 items-center cursor-pointer">
         {apps_of_user[selectedAppIndex] && (
@@ -37,7 +37,7 @@ const SelectAppDropDown = ({
                   rounded={true}
                 />
                 <span className="text-sm font-medium">
-                {JSON.parse(apps_of_user[selectedAppIndex].info).title}
+                  {JSON.parse(apps_of_user[selectedAppIndex].info).title}
                 </span>
               </div>
             }

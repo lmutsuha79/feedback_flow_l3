@@ -8,7 +8,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal, Tooltip } from "flowbite-react";
 import { toast } from "react-toastify";
 
-const AddNewAppId = ({ isActive, close }) => {
+const AddNewAppId = ({
+  isActive,
+  close,
+  setSelectedAppIndex,
+  numberOfApps,
+}) => {
   async function submitAddingNewApp() {
     turnOnLoadingScreen();
 
@@ -31,9 +36,10 @@ const AddNewAppId = ({ isActive, close }) => {
         throw new Error(err);
       }
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       document.getElementById("appId").value = "";
       sucess_toast("your new app was added successfully");
+      setSelectedAppIndex(numberOfApps);
       close();
     } catch (err) {
       console.log("the error from catch is " + err);

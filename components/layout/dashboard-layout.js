@@ -1,4 +1,3 @@
-import { Button, Modal, Tooltip } from "flowbite-react";
 import ProfileDropDown from "./layout-components/profile-drop-down";
 import SelectAppDropDown from "./layout-components/select-app-drop";
 import TopNav from "./layout-components/top-nav";
@@ -8,6 +7,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
 const DashboardLayout = (props) => {
+  console.log("re rendering dashboard");
   const user = useUser();
   const [apps_of_user, setAppsOfUser] = useState([]);
   const [selectedAppIndex, setSelectedAppIndex] = useState(0);
@@ -15,7 +15,7 @@ const DashboardLayout = (props) => {
     if (user) {
       getAppsByUser();
     }
-  }, [user]);
+  }, [user, selectedAppIndex]);
 
   // console.log("the dashboard layout is rendered");
 
@@ -35,7 +35,6 @@ const DashboardLayout = (props) => {
   if (user) {
     return (
       <>
-        <button onClick={getAppsByUser}>click me</button>
         <div className=" container pt-4">
           <div className="border border-slate-200 rounded-md">
             <header className="h-[64px]">
