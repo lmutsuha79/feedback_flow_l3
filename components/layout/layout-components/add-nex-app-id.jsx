@@ -32,6 +32,7 @@ const AddNewAppId = ({ isActive, close }) => {
       }
       const data = await res.json();
       console.log(data);
+      document.getElementById("appId").value = "";
       sucess_toast("your new app was added successfully");
       close();
     } catch (err) {
