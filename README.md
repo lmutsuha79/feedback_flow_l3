@@ -17,6 +17,12 @@ The project idea is to create a web application that helps app owners on Google 
 - list the apps of the user in the navbar and let the user select the app. --> (ok)
 - display the data of the app in the dashboard
 
-## up upcoming features
+## bugs I know about them
 
+Some app icons don't work (the solution is to try to save the icon inside the DB in a separate column)
+
+## up upcoming features and updates
+
+- save the apps of the user inside the local storage
+- save user info in the local storage
 - dark/light mode

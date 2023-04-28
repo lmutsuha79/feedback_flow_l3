@@ -28,7 +28,7 @@ const SelectAppDropDown = ({
 
       {!apps_of_user.length ? (
         <>
-          <Button color="light">
+          <Button onClick={showModal} color="light">
             <FontAwesomeIcon icon={faAdd} />
             <span className="ml-1">Add new app</span>
           </Button>
