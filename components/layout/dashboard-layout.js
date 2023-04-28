@@ -5,6 +5,10 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { notify } from "@/pages/_app";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import {
+  turnOffLoadinScreen,
+  turnOnLoadingScreen,
+} from "@/util/loadingFunctions";
 
 const DashboardLayout = (props) => {
   console.log("re rendering dashboard");
@@ -21,6 +25,7 @@ const DashboardLayout = (props) => {
 
   async function getAppsByUser() {
     // console.log("the user id ", user);
+    turnOnLoadingScreen();
     const { data, error } = await supabase
       .from("apps")
       .select("*")
@@ -30,6 +35,7 @@ const DashboardLayout = (props) => {
     }
     // console.log(data);
     setAppsOfUser(() => data);
+    turnOffLoadinScreen();
   }
 
   if (user) {
