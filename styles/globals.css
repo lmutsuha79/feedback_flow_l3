@@ -22,15 +22,14 @@
   }
 }
 
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
+/* style of header tabs dashboard */
+@layer components {
+  .active_header_tab {
+    @apply bg-main_dark text-white;
+  }
+}
+
+/* ########################################### */
 
 /* loading screen css */
 
@@ -39,8 +38,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* margin-top: -2.7em;
-  margin-left: -2.7em; */
+
   width: 5.4em;
   height: 5.4em;
   background-color: transparent;

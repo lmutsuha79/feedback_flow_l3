@@ -15,11 +15,16 @@ The project idea is to create a web application that helps app owners on Google 
 - add a loading screen to the dashboard --> (ok)
 - add toast notifications to the app --> (ok)
 - list the apps of the user in the navbar and let the user select the app. --> (ok)
-- display the data of the app in the dashboard
+- display the data of the app in the dashboard (about the app) --> (ok)
+- add multi-tabs in the header of the dashboard --> (ok)
+- get all the reviews for an app and show them in the dashboard
+
+================================================================
 
 ## bugs I know about them
 
-Some app icons don't work (the solution is to try to save the icon inside the DB in a separate column)
+- Some app icons don't work (the solution is to try to save the icon inside the DB in a separate column)
+- Sometimes the icon of the profile doesn't appear
 
 ## up upcoming features and updates
 

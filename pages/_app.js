@@ -13,7 +13,7 @@ import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import LoadingScreen from "@/components/ui/loading-screen";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,10 +27,19 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+export const DashboardContext = createContext();
+
 export default function App({ Component, pageProps }) {
   // Create a new supabase browser client on every first render.
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
+  const [currentApp, setCurrentApp] = useState();
+  
+  const Dashboard_States = {
+    currentApp,
+    setCurrentApp,
+  };
+  
   return (
     <SessionContextProvider
       supabaseClient={supabaseClient}
@@ -39,10 +48,11 @@ export default function App({ Component, pageProps }) {
       <ToastContainer />
 
       <LoadingScreen />
-
-      <div id="app_wrapper_none_loading_screen" className="w-screen h-screen">
-        <Component {...pageProps} />
-      </div>
+      <DashboardContext.Provider value={Dashboard_States}>
+        <div id="app_wrapper_none_loading_screen" className="w-screen h-screen">
+          <Component {...pageProps} />
+        </div>
+      </DashboardContext.Provider>
     </SessionContextProvider>
   );
 }
