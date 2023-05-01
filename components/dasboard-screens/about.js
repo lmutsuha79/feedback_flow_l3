@@ -1,7 +1,4 @@
-import { Table } from "flowbite-react";
-import { useContext, useEffect } from "react";
-import DashboardLayout from "@/components/layout/dashboard-layout";
-import { DashboardContext } from "../_app";
+import DashboardLayout from "../layout/dashboard-layout";
 
 const About = () => {
   const { currentApp } = useContext(DashboardContext);
@@ -10,8 +7,10 @@ const About = () => {
     <DashboardLayout>
       {currentApp && (
         <>
-        
-          <h2 className="mb-8 text-xl font-medium text-main_dark">Information About the App: </h2>
+          {console.log(JSON.parse(currentApp.info))}
+          <h2 className="mb-8 text-xl font-medium text-main_dark">
+            Information About the App:{" "}
+          </h2>
           <min>
             <Table striped={true}>
               <Table.Head>

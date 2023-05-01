@@ -12,39 +12,32 @@ import {
 import DashboardHeader from "./layout-components/dashboard-header";
 
 const DashboardLayout = ({ children }) => {
-  console.log("re rendering dashboard");
+  console.log("the dashboard layout is rendered");
   const user = useUser();
+
   const [apps_of_user, setAppsOfUser] = useState([]);
   const [selectedAppIndex, setSelectedAppIndex] = useState(0);
 
-  const {
-    currentApp,
-    setCurrentApp,
-    // set_global_SelectedAppIndex,
-    // set_gloabal_AppsOfUser,
-    // global_selectedAppIndex,
-    // gloabal_apps_of_user,
-  } = useContext(DashboardContext);
+  const { currentApp, setCurrentApp } = useContext(DashboardContext);
 
+  // Udate the GLOABAL setate of the current app
   useEffect(() => {
-    setCurrentApp(apps_of_user[selectedAppIndex]);
+    if (user) {
+      setCurrentApp(apps_of_user[selectedAppIndex]);
+    }
   }, [apps_of_user, selectedAppIndex]);
 
+  // getings the apps of the user when the user is upadated or initialized
   useEffect(() => {
-    console.log("the use effect of dahsboard layout \n states are: ");
-    console.log("selected index: " + selectedAppIndex);
-    console.log("selected app : " + apps_of_user[selectedAppIndex]);
-
     if (user) {
       getAppsByUser();
     }
+  }, [user]);
 
-    setCurrentApp(apps_of_user[selectedAppIndex]);
-  }, [user, selectedAppIndex]);
-
-  // console.log("the dashboard layout is rendered");
-
+  // get all apps that are related to the user and store them inside the appsOfUser state
   async function getAppsByUser() {
+    // get all apps that are related to the user and store them inside the appsOfUser state
+    console.log("fetching the api to get the apps of user");
     turnOnLoadingScreen();
     const { data, error } = await supabase
       .from("apps")
@@ -52,19 +45,14 @@ const DashboardLayout = ({ children }) => {
       .eq("user_id", user?.id);
     if (error) {
       console.log(error);
+      return;
     }
-    // console.log(data);
+
     setAppsOfUser(() => data);
     turnOffLoadinScreen();
   }
 
-  const dashboard_states = {
-    user,
-    apps_of_user,
-    selectedAppIndex,
-  };
-
-  if (user) {
+  if (user && apps_of_user.length) {
     return (
       <>
         <div className="container pt-4 min-h-screen ">

@@ -13,7 +13,7 @@ import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import LoadingScreen from "@/components/ui/loading-screen";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,12 +34,18 @@ export default function App({ Component, pageProps }) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   const [currentApp, setCurrentApp] = useState();
-  
+
   const Dashboard_States = {
     currentApp,
     setCurrentApp,
   };
-  
+  useEffect(() => {
+    console.log('try to load curren app from __App.js')
+    if (currentApp) {
+      console.log("{{{############################}}}" + currentApp);
+    }
+  }, [currentApp]);
+
   return (
     <SessionContextProvider
       supabaseClient={supabaseClient}
