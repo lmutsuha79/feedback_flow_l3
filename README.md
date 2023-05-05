@@ -17,7 +17,7 @@ The project idea is to create a web application that helps app owners on Google 
 - list the apps of the user in the navbar and let the user select the app. --> (ok)
 - display the data of the app in the dashboard (about the app) --> (ok)
 - add multi-tabs in the header of the dashboard --> (ok)
-- get all the reviews for an app and show them in the dashboard
+- get all the reviews for an app and show them in the dashboard --> (ok)
 
 ================================================================
 

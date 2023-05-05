@@ -8,13 +8,26 @@ import {
 } from "@/util/loadingFunctions";
 import ReviewRow from "@/components/ui/review-row";
 import ReviewCard from "@/components/ui/review-card";
+import useLocalStorage from "use-local-storage";
 
 const Reviews = () => {
   const { currentApp } = useContext(DashboardContext);
   const [reviews, setReviews] = useState([]);
 
+  const [localReviews, setLocalReviews] = useLocalStorage("reviews", {});
+
   async function getReviews() {
     turnOnLoadingScreen();
+
+    // check if the local reviews is exist and coresponding to the current app 
+    if (localReviews?.appId === currentApp.id) {
+      console.log("from the local storage");
+
+      turnOffLoadinScreen();
+      return localReviews.reviews;
+    }
+    // get the reviews from the db
+    console.log("get reviews from db");
     const { gplay_id } = currentApp;
     const res = await fetch("/api/get-reviews", {
       method: "POST",
@@ -24,8 +37,9 @@ const Reviews = () => {
       }),
     });
     const { reviews } = await res.json();
+    // store the new reviews to the local storage
+    setLocalReviews({ appId: currentApp.id, reviews });
     turnOffLoadinScreen();
-
     return reviews;
   }
   useEffect(() => {
@@ -35,18 +49,14 @@ const Reviews = () => {
   }, [currentApp]);
 
   useEffect(() => {
-    console.log(reviews);
+    // console.log(reviews);
   }, [reviews]);
-  const [selectedReviewIndex, setSelectedReviewIndex] = useState(null);
 
   return (
     <DashboardLayout>
       {reviews.length && (
         <main className="h-[100vh] overflow-y-scroll">
-          {/*  */}
-          {/* <ReviewCard review={reviews[selectedReviewIndex]} /> */}
-
-          <Table  className="" striped={true}>
+          <Table className="" striped={true}>
             <Table.Head>
               <Table.HeadCell>avatar</Table.HeadCell>
               <Table.HeadCell>username</Table.HeadCell>
@@ -62,12 +72,7 @@ const Reviews = () => {
             </Table.Head>
             <Table.Body className="divide-y">
               {reviews.map((review, index) => (
-                <ReviewRow
-                  key={review.id}
-                  review={review}
-                  // setSelectedReviewIndex={setSelectedReviewIndex}
-                  // index={index}
-                />
+                <ReviewRow key={review.id} review={review} />
               ))}
             </Table.Body>
           </Table>

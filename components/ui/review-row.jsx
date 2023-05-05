@@ -40,31 +40,6 @@ const ReviewRow = ({ review }) => {
         </td>
       </tr>
 
-      {/* <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-          <img
-            src={review.userImage}
-            alt={review.userName + "_image"}
-            className="rounded-full w-8 h-8"
-          />
-        </Table.Cell>
-        <Table.Cell>{review.userName}</Table.Cell>
-        <Table.Cell>
-          <Rating>{stars}</Rating>
-        </Table.Cell>
-        <Table.Cell>{review.text}</Table.Cell>
-        <Table.Cell>{review.date}</Table.Cell>
-        <Table.Cell>{review.version}</Table.Cell>
-        <Table.Cell>
-          <a
-            href={review.url}
-            target="__blank"
-            className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-          >
-            go_to_url
-          </a>
-        </Table.Cell>
-      </Table.Row> */}
     </>
   );
 };
