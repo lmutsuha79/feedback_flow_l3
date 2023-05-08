@@ -12,7 +12,7 @@ const About = () => {
         <>
         
           <h2 className="mb-8 text-xl font-medium text-main_dark">Information About the App: </h2>
-          <min>
+          <main>
             <Table striped={true}>
               <Table.Head>
                 <Table.HeadCell>key</Table.HeadCell>
@@ -37,7 +37,7 @@ const About = () => {
                 )}
               </Table.Body>
             </Table>
-          </min>
+          </main>
         </>
       )}
     </DashboardLayout>
