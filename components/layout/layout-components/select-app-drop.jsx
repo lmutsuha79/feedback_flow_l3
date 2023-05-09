@@ -2,31 +2,20 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Button, Dropdown } from "flowbite-react";
 import AddNewAppId from "./add-nex-app-id";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SelectAppDropDown = ({
   apps_of_user,
   selectedAppIndex,
   setSelectedAppIndex,
+  showModal,
+  setlocalSelectedAppIndex
 }) => {
   // console.log("slect app render");
-  const [ModalStatus, setModalStatus] = useState(false);
-  const showModal = () => {
-    setModalStatus(true);
-  };
-  const closeModal = () => {
-    setModalStatus(false);
-  };
+
   return (
     <>
-      <AddNewAppId
-        setSelectedAppIndex={setSelectedAppIndex}
-        numberOfApps={apps_of_user.length}
-        isActive={ModalStatus}
-        close={closeModal}
-      />
-
-      {!apps_of_user.length ? (
+      {apps_of_user.length === 0 ? (
         <>
           <Button onClick={showModal} color="light">
             <FontAwesomeIcon icon={faAdd} />
@@ -59,7 +48,10 @@ const SelectAppDropDown = ({
                 {/* ########################### */}
                 {apps_of_user.map((item, index) => (
                   <Dropdown.Item
-                    onClick={() => setSelectedAppIndex(index)}
+                    onClick={() => {
+                      setSelectedAppIndex(index);
+                      setlocalSelectedAppIndex(index);
+                    }}
                     className={index === selectedAppIndex ? "bg-blue_gray" : ""}
                     key={item.id}
                   >

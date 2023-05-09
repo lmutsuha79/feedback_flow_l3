@@ -10,6 +10,7 @@ const DashboardHeader = () => {
       <div className="flex justify-between">
         <div className="flex items-center">
           <Image  
+          priority={1}
             src={"/images/logo-black.png"}
             width={130}
             height={130}

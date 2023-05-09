@@ -56,9 +56,7 @@ const Reviews = () => {
 
   return (
     <DashboardLayout>
-      {/* {reviews.length && (
-       
-      )} */}
+  
       {reviews.length ? (
         <main className="h-[100vh] overflow-y-scroll">
           <div className="flex justify-end items-center gap-4">

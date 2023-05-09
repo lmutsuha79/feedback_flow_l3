@@ -24,7 +24,8 @@ The project idea is to create a web application that helps app owners on Google 
 ## bugs I know about them
 
 - Some app icons don't work (the solution is to try to save the icon inside the DB in a separate column)
-- Sometimes the icon of the profile doesn't appear
+- Sometimes the icon of the profile doesn't appear --> (fixed)
+- when a user add-new app the right drop-down menu for adding and selecting apps will disappear --> (fixed)
 
 ## up upcoming features and updates
 

@@ -2,17 +2,21 @@ import {
   turnOffLoadinScreen,
   turnOnLoadingScreen,
 } from "@/util/loadingFunctions";
-import { error_toast, sucess_toast } from "@/util/toastNotification";
+import {
+  error_toast,
+  sucess_toast,
+  warn_toast,
+} from "@/util/toastNotification";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal, Tooltip } from "flowbite-react";
-import { toast } from "react-toastify";
 
 const AddNewAppId = ({
   isActive,
   close,
   setSelectedAppIndex,
   numberOfApps,
+  setlocalSelectedAppIndex,
 }) => {
   async function submitAddingNewApp() {
     turnOnLoadingScreen();
@@ -39,7 +43,10 @@ const AddNewAppId = ({
       // console.log(data);
       document.getElementById("appId").value = "";
       sucess_toast("your new app was added successfully");
+      console.log("seting to number of apps");
+      console.log("the number of apps is " + numberOfApps);
       setSelectedAppIndex(numberOfApps);
+      setlocalSelectedAppIndex(numberOfApps);
       close();
     } catch (err) {
       console.log("the error from catch is " + err);
@@ -48,15 +55,27 @@ const AddNewAppId = ({
     turnOffLoadinScreen();
   }
   return (
-    <Modal show={isActive} size="md" popup={true} onClose={close}>
+    <Modal
+      show={isActive}
+      size="md"
+      popup={true}
+      onClose={
+        numberOfApps
+          ? close
+          : () =>
+              warn_toast(
+                "add one app to your collection to be able to continue"
+              )
+      }
+    >
       <Modal.Header>
         <div className="p-4">
           <div className="flex flex-col space-y-1.5 text-center sm:text-left">
             <h2 className="text-main_dark text-lg font-semibold leading-none tracking-tight">
-              Create team
+              Add new app
             </h2>
             <p className="text-sm font-normal text-main_text">
-              Add a new team to manage products and customers.
+              to get all your customers feedbacks
             </p>
           </div>
         </div>
@@ -97,6 +116,7 @@ const AddNewAppId = ({
         </div>
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
           <button
+            disabled={!numberOfApps}
             onClick={close}
             className="bg-white hover:bg-blue_gray text-main_dark inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input   h-10 py-2 px-4"
           >

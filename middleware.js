@@ -8,9 +8,9 @@ export async function middleware(req, res) {
   if (req.nextUrl.pathname.startsWith("/dashboard")) {
     //     verify that user is authenticated
     // We need to create a response and hand it to the supabase client to be able to modify the response headers.
-    const res = NextResponse.next();
+    const response = NextResponse.next();
     // Create authenticated Supabase Client.
-    const supabase = createMiddlewareSupabaseClient({ req, res });
+    const supabase = createMiddlewareSupabaseClient({ req, response });
 
     // Check if we have a session
     const {

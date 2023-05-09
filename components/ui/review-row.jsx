@@ -1,4 +1,5 @@
 import { Rating, Table } from "flowbite-react";
+import Image from "next/image";
 
 const ReviewRow = ({ review }) => {
   const stars = [];
@@ -6,7 +7,7 @@ const ReviewRow = ({ review }) => {
   for (let i = 0; i < 5; i++) {
     stars.push(<Rating.Star key={i} filled={i < review.score} />);
   }
- 
+
   return (
     <>
       <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -14,7 +15,9 @@ const ReviewRow = ({ review }) => {
           scope="row"
           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
-          <img
+          <Image
+            width={32}
+            height={32}
             src={review.userImage}
             alt={review.userName + "_image"}
             className="rounded-full w-8 h-8"
@@ -28,7 +31,9 @@ const ReviewRow = ({ review }) => {
         <td className="px-6 py-4">{review.text}</td>
         <td className="px-6 py-4">{review.date}</td>
         <td className="px-6 py-4">{review.version}</td>
-        <td className="px-6 py-4">{review.replyText ? review.replyText : "no replay text"}</td>
+        <td className="px-6 py-4">
+          {review.replyText ? review.replyText : "no replay text"}
+        </td>
         <td className="px-6 py-4 text-right">
           <a
             href={review.url}
@@ -39,7 +44,6 @@ const ReviewRow = ({ review }) => {
           </a>
         </td>
       </tr>
-
     </>
   );
 };

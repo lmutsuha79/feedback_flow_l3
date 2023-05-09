@@ -14,15 +14,20 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { Avatar, Dropdown } from "flowbite-react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 
-const ProfileDropDown = ({ userInfo }) => {
+const ProfileDropDown = ({ userInfo, setlocalSelectedAppIndex }) => {
   // console.log("profile deop down rerender");
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
 
   const handleLogout = async () => {
     turnOnLoadingScreen();
+    // reset the local storage keys and vaues
+    console.log("resting all local storage values ")
+    setlocalSelectedAppIndex(0)
+
     const { err } = await supabaseClient.auth.signOut();
     if (err) {
       turnOffLoadinScreen();
@@ -39,7 +44,14 @@ const ProfileDropDown = ({ userInfo }) => {
       <div className="flex justify-end">
         <Dropdown
           label={
-            <Avatar alt="User settings" img={userInfo.picture} rounded={true} />
+            // <Avatar alt="User settings" img={userInfo.picture} rounded={true} />
+            <Image
+              alt="user_img"
+              width={38}
+              height={38}
+              src={userInfo.picture}
+              className="rounded-full"
+            />
           }
           arrowIcon={false}
           inline={true}
