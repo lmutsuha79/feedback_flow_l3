@@ -18,12 +18,14 @@ The project idea is to create a web application that helps app owners on Google 
 - display the data of the app in the dashboard (about the app) --> (ok)
 - add multi-tabs in the header of the dashboard --> (ok)
 - get all the reviews for an app and show them in the dashboard --> (ok)
+- save the current selected app in the local storage --> (ok)
 
 ================================================================
 
 ## bugs I know about them
 
-- Some app icons don't work (the solution is to try to save the icon inside the DB in a separate column)
+- new user crates new app --> (fixed)
+- Some app icons don't work (the solution is to try to save the icon inside the DB in a separate column) --> (fixed)
 - Sometimes the icon of the profile doesn't appear --> (fixed)
 - when a user add-new app the right drop-down menu for adding and selecting apps will disappear --> (fixed)
 
