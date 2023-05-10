@@ -42,7 +42,7 @@ The project idea is to create a web application that helps app owners on Google 
 ================================================================
 
 ## bugs I know about them
-
+- try to move all the apps of users and selected app index and all the states that trigger unnecessary re-render of the top nav bar into the global state to prevent that.
 - new user crates new app --> (fixed)
 - Some app icons don't work (the solution is to try to save the icon inside the DB in a separate column) --> (fixed)
 - Sometimes the icon of the profile doesn't appear --> (fixed)
