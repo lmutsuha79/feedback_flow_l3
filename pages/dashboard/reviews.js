@@ -56,7 +56,6 @@ const Reviews = () => {
       }),
     });
     const { reviews } = await res.json();
-    console.log(reviews);
     // store the new reviews to the local storage
     setLocalReviews({ appId: currentApp.id, reviews });
     turnOffLoadinScreen();

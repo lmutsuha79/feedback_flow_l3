@@ -21,101 +21,6 @@ const TableReviews = ({ reviews }) => {
 
   const data = useMemo(() => reviews, []);
   console.log(data);
-  const columns = [
-    {
-      name: "Avatar",
-
-      selector: (row) => (
-        <Image
-          width={32}
-          height={32}
-          src={row.userImage}
-          alt={row.userName + "_image"}
-          className="rounded-full w-8 h-8"
-        />
-      ),
-      // grow: 0.5
-      width: "fit-content",
-    },
-    {
-      name: "UserName",
-      selector: (row) => (
-        <span className="whitespace-pre-line">{row.userName}</span>
-      ),
-      sortable: true,
-      width: "130px",
-    },
-    {
-      name: "Score",
-      selector: (row) => row.score,
-      width: "120px",
-      cell: (row) => {
-        const stars = [];
-
-        for (let i = 0; i < 5; i++) {
-          stars.push(<Rating.Star key={i} filled={i < row.score} />);
-        }
-
-        return <Rating className="fill-black">{stars}</Rating>;
-      },
-      sortable: true,
-    },
-
-    {
-      name: "Version",
-      selector: (row) => row.version,
-      width: "100px",
-      sortable: true,
-    },
-    {
-      name: "Date",
-      selector: (row) => row.date,
-      sortable: true,
-      width: "100px",
-      overflow: "scroll",
-    },
-    {
-      name: "Link",
-      width: "100px",
-
-      selector: (row) => (
-        <a
-          href={row.url}
-          target="__blank"
-          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-        >
-          go_to_url
-        </a>
-      ),
-    },
-    {
-      name: "Feedback",
-      selector: (row) => (
-        <p
-          className={`w-[250px] whitespace-pre-line px-2 feedback_text_id_${row.id} `}
-        >
-          {row.text}
-        </p>
-      ),
-      // width: "250px",
-    },
-    {
-      name: "Replay",
-      selector: (row) => row.replyText,
-      cell: (row) =>
-        row.replyText ? (
-          <p
-            className={`w-[250px] whitespace-pre-line p-2 replay_text_id_${row.id}`}
-          >
-            {row.replyText}
-          </p>
-        ) : (
-          <span>no replay</span>
-        ),
-
-      width: "250px",
-    },
-  ];
 
   const [hoveredRow, setHoveredRow] = useState(null);
 
@@ -150,20 +55,28 @@ const TableReviews = ({ reviews }) => {
     setGlobalFilterValue(value);
   };
 
-  // const [filters, setFilters] = useState({});
-  // const handleFilterChange = (columnName, filterValue) => {
-  //   setFilters((prevFilters) => ({
-  //     ...prevFilters,
-  //     [columnName]: filterValue,
-  //   }));
-  // };
-  // const filteredData = data.filter((row) => {
-  //   return Object.entries(filters).every(([columnName, filterValue]) => {
-  //     // Apply the filter condition for each column
-  //     const rowValue = row[columnName];
-  //     return rowValue.toLowerCase().includes(filterValue.toLowerCase());
-  //   });
-  // });
+  function mapSentimentToEmoji(sentiment) {
+    if (sentiment >= 4) {
+      return "😍"; // Very positive emoji
+    }
+    if (sentiment >= 2) {
+      return "😄"; // Positive emoji
+    }
+    if (sentiment > 0) {
+      return "🙂"; // Slightly positive emoji
+    }
+    if (sentiment == 0) {
+      return "😐"; // Neutral emoji
+    }
+    if (sentiment >= -1) {
+      return "😔"; // Slightly negative emoji
+    }
+    if (sentiment >= -4) {
+      return "😞"; // Negative emoji
+    } else {
+      return "😡"; // Very negative emoji
+    }
+  }
 
   return (
     <main className="">
@@ -184,7 +97,7 @@ const TableReviews = ({ reviews }) => {
         <span className="p-input-icon-left">
           <FontAwesomeIcon icon={faSearch} />
           <InputText
-          className="border-main_dark ring-black focus:ring-black"
+            className="border-main_dark ring-black focus:ring-black"
             value={globalFilterValue}
             onChange={onGlobalFilterChange}
             placeholder="Search any thing here ..."
@@ -221,6 +134,18 @@ const TableReviews = ({ reviews }) => {
         paginatorLeft={paginatorLeft}
         paginatorRight={paginatorRight}
       >
+        <Column
+          style={{ width: "50px" }}
+          field={"sentiment"}
+          body={(review) => (
+            <span className="text-[40px]">
+              {mapSentimentToEmoji(review.sentiment)}
+              <span>{review.sentiment}</span>
+            </span>
+          )}
+          header="Sentiment"
+          sortable
+        ></Column>
         <Column
           style={{ width: "50px" }}
           field={(review) => (
@@ -268,9 +193,7 @@ const TableReviews = ({ reviews }) => {
           field="date"
           sortable
           body={(review) => (
-            <span className="text-sm w-[100px]">
-              {review.date}
-            </span>
+            <span className="text-sm w-[100px]">{review.date}</span>
           )}
           header="Date"
         ></Column>

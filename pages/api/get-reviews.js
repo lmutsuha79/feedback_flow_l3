@@ -29,7 +29,6 @@ export default async (req, res) => {
     }
   });
 
-  console.log(new_reviews);
 
   res.status(200).json({ reviews: new_reviews });
 };
