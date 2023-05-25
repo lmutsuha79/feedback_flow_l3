@@ -1,4 +1,5 @@
 import gplay from "google-play-scraper";
+import Sentiment from "sentiment";
 
 async function getAllReviews(appId) {
   try {
@@ -15,8 +16,20 @@ async function getAllReviews(appId) {
 
 export default async (req, res) => {
   const { gplay_id } = req.body;
-  // console.log("the sent gpaly is ", gplay_id);
+  // geting all reviews
   const reviews = await getAllReviews(gplay_id);
-  // console.log(reviews.data)
-  res.status(200).json({ reviews: reviews?.data});
+
+  // parse the reviews and perform sentiment analysis on reviews that contains a feedback
+  const sentiment = new Sentiment();
+
+  const new_reviews = reviews?.data.map((review) => {
+    if (review.text.length) {
+      const result = sentiment.analyze(review.text);
+      return { ...review, sentiment: result.score };
+    }
+  });
+
+  console.log(new_reviews);
+
+  res.status(200).json({ reviews: new_reviews });
 };

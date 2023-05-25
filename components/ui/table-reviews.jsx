@@ -1,4 +1,8 @@
-import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowDown,
+  faArrowUp,
+  faSearch,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Rating, Table, Alert } from "flowbite-react";
 import { useEffect, useMemo, useState } from "react";
@@ -9,6 +13,8 @@ import Image from "next/image";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+import { FilterMatchMode, FilterOperator } from "primereact/api";
+import { InputText } from "primereact/inputtext";
 
 const TableReviews = ({ reviews }) => {
   //   const [filteredReviews, setFilteredReviews] = useState([...reviews]);
@@ -130,6 +136,19 @@ const TableReviews = ({ reviews }) => {
 
   const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
   const paginatorRight = <Button type="button" icon="pi pi-download" text />;
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  });
+  const [globalFilterValue, setGlobalFilterValue] = useState("");
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters["global"].value = value;
+
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
 
   // const [filters, setFilters] = useState({});
   // const handleFilterChange = (columnName, filterValue) => {
@@ -148,46 +167,46 @@ const TableReviews = ({ reviews }) => {
 
   return (
     <main className="">
-      {/* <div className="flex justify-end items-center gap-4">
-              <span className="text-main_dark font-medium ">filter by:</span>
-              <div className="bg-main_dark px-4 py-2 rounded-md">
-                <Dropdown
-                  label={
-                    <div className=" text-white flex items-center gap-2">
-                      <span>new reviews first</span>
-                      <FontAwesomeIcon icon={faArrowDownShortWide} />
-                    </div>
-                  }
-                  inline={true}
-                  floatingArrow={true}
-                  arrowIcon={false}
-                >
-                  <Dropdown.Item>new reviews first</Dropdown.Item>
-                  <Dropdown.Item>old reviews first</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item>reviews without reply</Dropdown.Item>
-                  <Dropdown.Item>reviews that have a reply</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item>
-                    <ScoreStepsRange />
-                  </Dropdown.Item>
-                </Dropdown>
-              </div>
-            </div> */}
-
       <Alert className="" className="bg-main_dark ">
         <span className="text-white">
-          <h3 className="font-medium underline text-lg mb-1">Multiple Sort Column Selection:</h3>
+          <h3 className="font-medium underline text-lg mb-1">
+            Multiple Sort Column Selection: ⌘
+          </h3>
           {`
           
            To select multiple columns for sorting, hold down the Ctrl key (Command key on macOS) while clicking on the column headers.
-          {'\n'}
+          
           This allows you to apply sorting to multiple columns simultaneously. Release the Ctrl key to finalize your selection.          `}
         </span>
       </Alert>
-      
+
+      <div className="flex justify-end items-center mt-8">
+        <span className="p-input-icon-left">
+          <FontAwesomeIcon icon={faSearch} />
+          <InputText
+          className="border-main_dark ring-black focus:ring-black"
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+            placeholder="Search any thing here ..."
+          />
+        </span>
+      </div>
       <DataTable
-      className="mt-6"
+        dataKey="id"
+        filters={filters}
+        filterDisplay="row"
+        // loading={"loading"}
+        globalFilterFields={[
+          "date",
+          "userName",
+          "score",
+          "version",
+          "text",
+          "replyText",
+        ]}
+        // header={header}
+        emptyMessage="No customers found."
+        className="mt-6"
         sortMode="multiple"
         tableStyle={{ maxHeight: "50px" }}
         value={reviews}
@@ -250,7 +269,7 @@ const TableReviews = ({ reviews }) => {
           sortable
           body={(review) => (
             <span className="text-sm w-[100px]">
-              {new Date(review.date).toLocaleString("")}
+              {review.date}
             </span>
           )}
           header="Date"

@@ -4,11 +4,15 @@
 
 ================================================================
 
-The project idea is to create a web application that helps app owners on Google Play to improve their application based on customer reviews and ratings. The application will collect customer reviews and ratings and perform sentiment analysis on them to determine customer satisfaction levels. The application will also use topic modeling to identify the most commonly mentioned features or issues in the reviews. The results of the analysis will then be presented to the app owners in an easy-to-understand format, along with suggested updates and improvements to the application based on the feedback. Overall, the goal of the application is to help app owners make data-driven decisions to improve their applications and increase customer satisfaction.
+The project idea is to create a web application that helps app owners on Google Play to improve their application based on customer reviews and ratings.
+The application will collect customer reviews and ratings and perform sentiment analysis on them to determine customer satisfaction levels.
+The application will also use topic modeling to identify the most commonly mentioned features or issues in the reviews.
+The results of the analysis will then be presented to the app owners in an easy-to-understand format, along with suggested updates and improvements to the application based on the feedback.
+Overall, the goal of the application is to help app owners make data-driven decisions to improve their applications and increase customer satisfaction.
 
 ================================================================
 
-## the beta version is available you can check it out [here](https://feedback-flow-l3.vercel.app){target="_blank"}
+## the beta version is available you can check it out [here](https://feedback-flow-l3.vercel.app){target="\_blank"}
 
 ================================================================
 
@@ -17,19 +21,19 @@ The project idea is to create a web application that helps app owners on Google 
 - clone the repository
 - cd into the repository
 - npm install
-- add Supabase Google provider authentication by following this [documentation](https://supabase.com/docs/guides/auth/social-login/auth-google){target="_blank"}
+- add Supabase Google provider authentication by following this [documentation](https://supabase.com/docs/guides/auth/social-login/auth-google){target="\_blank"}
 - create the .env file
 - add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY values
 - npm run dev to run the local dev server.
 
 ================================================================
+
 ## features I'm currently working on (To-Dos)
+
 - add filter methods on the reviews table
 
-
-
-
 ================================================================
+
 ## features I'm Done working on (Done !)
 
 - login/registration (google provider with next-auth) --> (ok)
@@ -46,10 +50,10 @@ The project idea is to create a web application that helps app owners on Google 
 - get all the reviews for an app and show them in the dashboard --> (ok)
 - save the currently selected app in the local storage --> (ok)
 
-
 ================================================================
 
 ## bugs and enhancement I know about them
+
 - let the user have the ability to resize the table column width on the reviews page.
 - try to move all the apps of users and selected app index and all the states that trigger unnecessary re-render of the top nav bar into the global state to prevent that.
 - new user crates new app --> (fixed)

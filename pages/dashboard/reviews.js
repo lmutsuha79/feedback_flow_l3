@@ -36,14 +36,17 @@ const Reviews = () => {
     turnOnLoadingScreen();
 
     // check if the local reviews is exist and coresponding to the current app
-    if (localReviews?.appId === currentApp.id) {
+    if (
+      localReviews?.appId === currentApp.id &&
+      localReviews?.reviews?.length > 0
+    ) {
       console.log("from the local storage");
 
       turnOffLoadinScreen();
       return localReviews.reviews;
     }
-    // get the reviews from the db
-    console.log("get reviews from db");
+    // get the reviews from the server
+    console.log("get reviews from server");
     const { gplay_id } = currentApp;
     const res = await fetch("/api/get-reviews", {
       method: "POST",
@@ -53,6 +56,7 @@ const Reviews = () => {
       }),
     });
     const { reviews } = await res.json();
+    console.log(reviews);
     // store the new reviews to the local storage
     setLocalReviews({ appId: currentApp.id, reviews });
     turnOffLoadinScreen();
