@@ -18,5 +18,5 @@ export default async (req, res) => {
   // console.log("the sent gpaly is ", gplay_id);
   const reviews = await getAllReviews(gplay_id);
   // console.log(reviews.data)
-  res.status(200).json({ reviews: reviews.data});
+  res.status(200).json({ reviews: reviews?.data});
 };

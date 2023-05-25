@@ -2,17 +2,31 @@ import DashboardLayout from "@/components/layout/dashboard-layout";
 import { Table, Dropdown, Spinner } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
 import { DashboardContext } from "../_app";
-import { faAdd, faArrowDown, faArrowDown19, faArrowDownShortWide } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowDown,
+  faArrowDownShortWide,
+  faArrowUp,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   turnOffLoadinScreen,
   turnOnLoadingScreen,
 } from "@/util/loadingFunctions";
 import ReviewRow from "@/components/ui/review-row";
-import ReviewCard from "@/components/ui/review-card";
 import useLocalStorage from "use-local-storage";
+import ScoreStepsRange from "@/components/ui/score-steps-range";
+import TableReviews from "@/components/ui/table-reviews";
 
 const Reviews = () => {
+  // create a new state called selectedFilters makes it empaty initially
+  // then when user select an item from the list of filters in the UI the state changes and the slected filter added to the list of filters
+  // then every time the state changes I call the method of filter
+
+  // the method of filter
+  // ######################
+  // this mehtod is used to update the reviews list and than updates the UI
+  // the method get the parameters of the filter from the selectedFilters state
+
   const { currentApp } = useContext(DashboardContext);
   const [reviews, setReviews] = useState([]);
 
@@ -51,62 +65,15 @@ const Reviews = () => {
   }, [currentApp]);
 
   useEffect(() => {
-    // console.log(reviews);
+    console.log(reviews);
   }, [reviews]);
 
   return (
     <DashboardLayout>
-  
       {reviews.length ? (
-        <main className="h-[100vh] overflow-y-scroll">
-          <div className="flex justify-end items-center gap-4">
-            <span className="text-main_dark font-medium ">filter by:</span>
-            <div className="bg-main_dark px-4 py-2 rounded-md">
-              <Dropdown
-                label={
-                  <div className=" text-white flex items-center gap-2">
-                    <span>new reviews first</span>
-                    <FontAwesomeIcon icon={faArrowDownShortWide} />
-                  </div>
-                }
-                inline={true}
-                floatingArrow={true}
-                arrowIcon={false}
-              >
-                <Dropdown.Item>new reviews first</Dropdown.Item>
-                <Dropdown.Item>old reviews first</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item>reviews without reply</Dropdown.Item>
-                <Dropdown.Item>reviews that have a reply</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item>Separated link</Dropdown.Item>
-              </Dropdown>
-            </div>
-          </div>
-
-          <Table className="mt-8" striped={true}>
-            <Table.Head>
-              <Table.HeadCell>avatar</Table.HeadCell>
-              <Table.HeadCell>username</Table.HeadCell>
-              <Table.HeadCell>score</Table.HeadCell>
-              <Table.HeadCell>text</Table.HeadCell>
-              <Table.HeadCell>date</Table.HeadCell>
-              <Table.HeadCell>version</Table.HeadCell>
-              <Table.HeadCell>replay</Table.HeadCell>
-              <Table.HeadCell>url</Table.HeadCell>
-              {/* <Table.HeadCell>
-                <span className="sr-only">Edit</span>
-              </Table.HeadCell> */}
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {reviews.map((review, index) => (
-                <ReviewRow key={review.id} review={review} />
-              ))}
-            </Table.Body>
-          </Table>
-        </main>
+        <TableReviews reviews={reviews} />
       ) : (
-        <div className="h-screen flex justify-center gap-4 pt-8">
+        <div className=" flex justify-center gap-4 pt-8">
           <Spinner
             className="fill-main_dark"
             color="in"

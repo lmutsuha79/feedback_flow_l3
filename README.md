@@ -21,9 +21,16 @@ The project idea is to create a web application that helps app owners on Google 
 - create the .env file
 - add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY values
 - npm run dev to run the local dev server.
-================================================================
 
+================================================================
 ## features I'm currently working on (To-Dos)
+- add filter methods on the reviews table
+
+
+
+
+================================================================
+## features I'm Done working on (Done !)
 
 - login/registration (google provider with next-auth) --> (ok)
 - let the user register a new app to analyze --> (ui ok / db ok )
@@ -39,12 +46,12 @@ The project idea is to create a web application that helps app owners on Google 
 - get all the reviews for an app and show them in the dashboard --> (ok)
 - save the currently selected app in the local storage --> (ok)
 
+
 ================================================================
 
 ## bugs and enhancement I know about them
 - let the user have the ability to resize the table column width on the reviews page.
 - try to move all the apps of users and selected app index and all the states that trigger unnecessary re-render of the top nav bar into the global state to prevent that.
-
 - new user crates new app --> (fixed)
 - Some app icons don't work (the solution is to try to save the icon inside the DB in a separate column) --> (fixed)
 - Sometimes the icon of the profile doesn't appear --> (fixed)

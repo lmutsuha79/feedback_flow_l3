@@ -12,6 +12,11 @@ import {
 import DashboardHeader from "./layout-components/dashboard-header";
 import AddNewAppId from "./layout-components/add-nex-app-id";
 import useLocalStorage from "use-local-storage";
+//theme
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+
+//core
+import "primereact/resources/primereact.min.css";
 
 const DashboardLayout = ({ children }) => {
   console.log("the dashboard layout is rendered");
