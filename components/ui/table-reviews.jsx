@@ -1,5 +1,4 @@
 import { supabase } from "@/lib/supabaseClient";
-
 import {
   error_toast,
   sucess_toast,
@@ -160,6 +159,7 @@ const TableReviews = ({ reviews }) => {
           This allows you to apply sorting to multiple columns simultaneously. Release the Ctrl key to finalize your selection.          `}
         </span>
       </Alert>
+
       <div className="flex justify-between items-center mt-8">
         {/* add selected rows */}
         <div className="flex items-center gap-4">
@@ -174,21 +174,18 @@ const TableReviews = ({ reviews }) => {
               </div>
             }
           >
-            <Dropdown.Item onClick={() => setAddToListOptionName("Bug")}>
+            <Dropdown.Item onClick={() => setAddToListOptionName("Bugs")}>
               <div className="flex gap-2 items-center">
                 <FontAwesomeIcon icon={faBug} />
-                <span className="text-main_dark font-medium">Bug</span>
+                <span className="text-main_dark font-medium">Bugs</span>
               </div>
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => setAddToListOptionName("Feature")}>
+            <Dropdown.Item onClick={() => setAddToListOptionName("Features")}>
               <div className="flex gap-2 items-center">
                 <FontAwesomeIcon icon={faLightbulb} />
-                <span className="text-main_dark font-medium">Feature</span>
+                <span className="text-main_dark font-medium">Features</span>
               </div>
             </Dropdown.Item>
-            <Dropdown.Item>Earnings</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item>Separated link</Dropdown.Item>
           </Dropdown>
           {addToListOptionName && (
             <button
@@ -201,17 +198,20 @@ const TableReviews = ({ reviews }) => {
         </div>
         {/* search bar */}
         <div className="flex justify-end items-center">
-          <span className="p-input-icon-left">
-            <FontAwesomeIcon icon={faSearch} />
-            <InputText
-              className="border-main_dark ring-black focus:ring-black"
-              value={globalFilterValue}
-              onChange={onGlobalFilterChange}
-              placeholder="Search any thing here ..."
-            />
-          </span>
-        </div>
+            <span className="p-input-icon-left">
+              <FontAwesomeIcon icon={faSearch} />
+              <InputText
+                className="border-main_dark ring-black focus:ring-black"
+                value={globalFilterValue}
+                onChange={onGlobalFilterChange}
+                placeholder="Search any thing here ..."
+              />
+            </span>
+          </div>
       </div>
+
+
+
 
       <DataTable
         dataKey="id"
@@ -355,36 +355,6 @@ const TableReviews = ({ reviews }) => {
           header="Url"
         ></Column>
       </DataTable>
-
-      {/* // apply the table props */}
-
-      {/* <Table className="mt-8" striped={true}>
-        <Table.Head>
-          <Table.HeadCell>avatar</Table.HeadCell>
-          <Table.HeadCell>username</Table.HeadCell>
-          <Table.HeadCell>score</Table.HeadCell>
-          <Table.HeadCell>text</Table.HeadCell>
-          <Table.HeadCell>
-            <span>date</span>{" "}
-            <button>
-              {selectedFilters.dateOrder === "newFirst" ? (
-                <FontAwesomeIcon icon={faArrowDown} />
-              ) : (
-                <FontAwesomeIcon icon={faArrowUp} />
-              )}
-            </button>
-          </Table.HeadCell>
-          <Table.HeadCell>version</Table.HeadCell>
-          <Table.HeadCell>replay</Table.HeadCell>
-          <Table.HeadCell>url</Table.HeadCell>
-         
-        </Table.Head>
-        <Table.Body className="divide-y">
-          {reviews.map((review, index) => (
-            <ReviewRow key={review.id} review={review} />
-          ))}
-        </Table.Body>
-      </Table> */}
     </main>
   );
 };
