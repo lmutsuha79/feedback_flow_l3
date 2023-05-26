@@ -1,6 +1,6 @@
 # Feedback Flow
 
-## description
+## Description
 
 ================================================================
 
@@ -12,61 +12,63 @@ Overall, the goal of the application is to help app owners make data-driven deci
 
 ================================================================
 
-## the beta version is available you can check it out [here](https://feedback-flow-l3.vercel.app){target="\_blank"}
+## Beta Version
+
+The beta version is available. You can check it out [here](https://feedback-flow-l3.vercel.app) (opens in a new window).
 
 ================================================================
 
-## how to install:
+## How to Install:
 
-- clone the repository
-- cd into the repository
-- npm install
-- add Supabase Google provider authentication by following this [documentation](https://supabase.com/docs/guides/auth/social-login/auth-google){target="\_blank"}
-- create the .env file
-- add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY values
-- npm run dev to run the local dev server.
-
-================================================================
-
-## features I'm currently working on (To-Dos)
-
-- display a flag that indicates whether a review is a bug or a feature or not yet set
+- Clone the repository
+- CD into the repository
+- Run `npm install`
+- Add Supabase Google provider authentication by following this [documentation](https://supabase.com/docs/guides/auth/social-login/auth-google) (opens in a new window)
+- Create the `.env` file
+- Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` values
+- Run `npm run dev` to run the local dev server.
 
 ================================================================
 
-## features I'm Done working on (Done !)
+## Features I'm Currently Working On (To-Dos)
 
-- login/registration (google provider with next-auth) --> (ok)
-- let the user register a new app to analyze --> (ui ok / db ok )
-- get all (reviews and feedback) for a new app (web scraping) --> (ok)
-- protect the dashboard from unauthenticated users --> (ok)
-- display the user information in the dashboard --> (ok)
-- the problem of logout --> (ok)
-- add a loading screen to the dashboard --> (ok)
-- add toast notifications to the app --> (ok)
-- list the apps of the user in the navbar and let the user select the app. --> (ok)
-- display the data of the app in the dashboard (about the app) --> (ok)
-- add multi-tabs in the header of the dashboard --> (ok)
-- get all the reviews for an app and show them in the dashboard --> (ok)
-- save the currently selected app in the local storage --> (ok)
-- add filter methods on the reviews table --> ok
-- refactor the table-reviews component. --> (ok)
+- Display a flag that indicates whether a review is a bug or a feature or not yet set
 
 ================================================================
 
-## bugs and enhancement I know about them
+## Features I'm Done Working On (Done!)
 
-- let the user have the ability to resize the table column width on the reviews page.
-- try to move all the apps of users and selected app index and all the states that trigger unnecessary re-render of the top nav bar into the global state to prevent that.
-- new user crates new app --> (fixed)
+- Login/registration (Google provider with next-auth) --> (ok)
+- Let the user register a new app to analyze --> (UI ok / DB ok)
+- Get all (reviews and feedback) for a new app (web scraping) --> (ok)
+- Protect the dashboard from unauthenticated users --> (ok)
+- Display the user information in the dashboard --> (ok)
+- The problem of logout --> (ok)
+- Add a loading screen to the dashboard --> (ok)
+- Add toast notifications to the app --> (ok)
+- List the apps of the user in the navbar and let the user select the app. --> (ok)
+- Display the data of the app in the dashboard (about the app) --> (ok)
+- Add multi-tabs in the header of the dashboard --> (ok)
+- Get all the reviews for an app and show them in the dashboard --> (ok)
+- Save the currently selected app in the local storage --> (ok)
+- Add filter methods on the reviews table --> ok
+- Refactor the table-reviews component --> (ok)
+
+================================================================
+
+## Bugs and Enhancements
+
+- Let the user have the ability to resize the table column width on the reviews page.
+- Try to move all the apps of users and selected app index and all the states that trigger unnecessary re-render of the top nav bar into the global state to prevent that.
+- New user creates a new app --> (fixed)
 - Some app icons don't work (the solution is to try to save the icon inside the DB in a separate column) --> (fixed)
 - Sometimes the icon of the profile doesn't appear --> (fixed)
-- when a user add-new app the right drop-down menu for adding and selecting apps will disappear --> (fixed)
+- When a user adds a new app, the right drop-down menu for adding and selecting apps will disappear --> (fixed)
 
 ================================================================
 
-## up upcoming features and updates
+## Upcoming Features and Updates
 
-- save the apps of the user inside the local storage
-- save user info in the local storage
-- dark/light mode
+- Save the apps of the user inside the local storage
+- Save user info in the local storage
+- Dark/light mode
