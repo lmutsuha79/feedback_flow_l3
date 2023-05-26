@@ -30,7 +30,6 @@ Overall, the goal of the application is to help app owners make data-driven deci
 
 ## features I'm currently working on (To-Dos)
 
-- refactor the table-reviews component.
 - display a flag that indicates whether a review is a bug or a feature or not yet set
 
 ================================================================
@@ -51,6 +50,7 @@ Overall, the goal of the application is to help app owners make data-driven deci
 - get all the reviews for an app and show them in the dashboard --> (ok)
 - save the currently selected app in the local storage --> (ok)
 - add filter methods on the reviews table --> ok
+- refactor the table-reviews component. --> (ok)
 
 ================================================================
 
