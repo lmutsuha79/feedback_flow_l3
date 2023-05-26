@@ -1,4 +1,8 @@
-const SearchReviews = () => {
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { InputText } from "primereact/inputtext";
+
+const SearchReviews = ({globalFilterValue,onGlobalFilterChange}) => {
       return (
             <div className="flex justify-end items-center">
             <span className="p-input-icon-left">
