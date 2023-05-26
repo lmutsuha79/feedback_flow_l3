@@ -18,14 +18,7 @@ import ScoreStepsRange from "@/components/ui/score-steps-range";
 import TableReviews from "@/components/ui/table-reviews";
 
 const Reviews = () => {
-  // create a new state called selectedFilters makes it empaty initially
-  // then when user select an item from the list of filters in the UI the state changes and the slected filter added to the list of filters
-  // then every time the state changes I call the method of filter
-
-  // the method of filter
-  // ######################
-  // this mehtod is used to update the reviews list and than updates the UI
-  // the method get the parameters of the filter from the selectedFilters state
+  
 
   const { currentApp } = useContext(DashboardContext);
   const [reviews, setReviews] = useState([]);
@@ -68,7 +61,7 @@ const Reviews = () => {
   }, [currentApp]);
 
   useEffect(() => {
-    console.log(reviews);
+    // console.log(reviews);
   }, [reviews]);
 
   return (

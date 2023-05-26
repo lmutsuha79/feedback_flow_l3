@@ -1,11 +1,20 @@
+import { supabase } from "@/lib/supabaseClient";
+
+import {
+  error_toast,
+  sucess_toast,
+  warn_toast,
+} from "@/util/toastNotification";
 import {
   faArrowDown,
   faArrowUp,
   faSearch,
+  faBug,
+  faLightbulb,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Rating, Table, Alert } from "flowbite-react";
-import { useEffect, useMemo, useState } from "react";
+import { Rating, Table, Alert, Dropdown } from "flowbite-react";
+import { useEffect, useMemo, useState, useContext } from "react";
 import ReviewRow from "./review-row";
 import Image from "next/image";
 // import DataTable from "react-data-table-component";
@@ -15,6 +24,7 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { InputText } from "primereact/inputtext";
+import { DashboardContext } from "@/pages/_app";
 
 const TableReviews = ({ reviews }) => {
   //   const [filteredReviews, setFilteredReviews] = useState([...reviews]);
@@ -54,6 +64,7 @@ const TableReviews = ({ reviews }) => {
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
+  const [selectedReviews, setSelectedReviews] = useState([]);
 
   function mapSentimentToEmoji(sentiment) {
     if (sentiment >= 4) {
@@ -78,6 +89,63 @@ const TableReviews = ({ reviews }) => {
     }
   }
 
+  const [addToListOptionName, setAddToListOptionName] = useState(null);
+  const { currentApp } = useContext(DashboardContext);
+
+  async function handleConfirmeMovingRows() {
+    if (!addToListOptionName) {
+      error_toast("select an option (bug | feature");
+      return;
+    }
+    if (!selectedReviews.length) {
+      error_toast("try to select at least one row to continue");
+      return;
+    }
+    // save the selected reviews into bugs table
+
+    // console.log(currentApp);
+
+    // get all preview bugs then add new bugs to the previews ones
+    const { data, error } = await supabase
+      .from("bugs")
+      .select("value")
+      .eq("app_id", currentApp.id);
+    if (error) {
+      console.log(error);
+      error_toast(error);
+      return;
+    }
+    const prev_bugs = data[0]?.value;
+    // update the bugs list of this app id
+    if (prev_bugs) {
+      console.log("update");
+      const { data, error } = await supabase
+        .from("bugs")
+        .update({ value: { ...prev_bugs, ...selectedReviews } })
+        .eq("app_id", currentApp.id);
+      if (error) {
+        console.log(error);
+        error_toast(error);
+        return;
+      }
+      sucess_toast("bugs successfully added to your  bugs list");
+    }
+    // first time create bugs
+    else {
+      console.log("add the first time create bugs");
+
+      const { err } = await supabase.from("bugs").insert({
+        app_id: currentApp.id,
+        value: { ...selectedReviews },
+      });
+      if (err) {
+        error_toast(err);
+        return;
+      }
+      warn_toast("sucessfuly created new bugs list for your application");
+      sucess_toast("bugs successfully added to your  bugs list");
+    }
+  }
   return (
     <main className="">
       <Alert className="" className="bg-main_dark ">
@@ -92,23 +160,69 @@ const TableReviews = ({ reviews }) => {
           This allows you to apply sorting to multiple columns simultaneously. Release the Ctrl key to finalize your selection.          `}
         </span>
       </Alert>
-
-      <div className="flex justify-end items-center mt-8">
-        <span className="p-input-icon-left">
-          <FontAwesomeIcon icon={faSearch} />
-          <InputText
-            className="border-main_dark ring-black focus:ring-black"
-            value={globalFilterValue}
-            onChange={onGlobalFilterChange}
-            placeholder="Search any thing here ..."
-          />
-        </span>
+      <div className="flex justify-between items-center mt-8">
+        {/* add selected rows */}
+        <div className="flex items-center gap-4">
+          <span className="text-lg font-medium text-main_dark">
+            Add the selected rows to the list of:{" "}
+          </span>
+          <Dropdown
+            style={{ background: "rgb(15 23 42 / var(--tw-text-opacity)" }}
+            label={
+              <div>
+                {addToListOptionName ? addToListOptionName : "Choose option"}
+              </div>
+            }
+          >
+            <Dropdown.Item onClick={() => setAddToListOptionName("Bug")}>
+              <div className="flex gap-2 items-center">
+                <FontAwesomeIcon icon={faBug} />
+                <span className="text-main_dark font-medium">Bug</span>
+              </div>
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => setAddToListOptionName("Feature")}>
+              <div className="flex gap-2 items-center">
+                <FontAwesomeIcon icon={faLightbulb} />
+                <span className="text-main_dark font-medium">Feature</span>
+              </div>
+            </Dropdown.Item>
+            <Dropdown.Item>Earnings</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item>Separated link</Dropdown.Item>
+          </Dropdown>
+          {addToListOptionName && (
+            <button
+              onClick={handleConfirmeMovingRows}
+              className="text-main_dark underline rounded-md px-4 py-2"
+            >
+              Confirme Action
+            </button>
+          )}
+        </div>
+        {/* search bar */}
+        <div className="flex justify-end items-center">
+          <span className="p-input-icon-left">
+            <FontAwesomeIcon icon={faSearch} />
+            <InputText
+              className="border-main_dark ring-black focus:ring-black"
+              value={globalFilterValue}
+              onChange={onGlobalFilterChange}
+              placeholder="Search any thing here ..."
+            />
+          </span>
+        </div>
       </div>
+
       <DataTable
         dataKey="id"
+        // selectionMode="multiple"
+        selectionMode="checkbox"
+        selection={selectedReviews}
+        onSelectionChange={(e) => setSelectedReviews(e.value)}
+        metaKeySelection={false}
+        dragSelection
         filters={filters}
         filterDisplay="row"
-        // loading={"loading"}
         globalFilterFields={[
           "date",
           "userName",
@@ -117,7 +231,6 @@ const TableReviews = ({ reviews }) => {
           "text",
           "replyText",
         ]}
-        // header={header}
         emptyMessage="No customers found."
         className="mt-6"
         sortMode="multiple"
@@ -134,6 +247,11 @@ const TableReviews = ({ reviews }) => {
         paginatorLeft={paginatorLeft}
         paginatorRight={paginatorRight}
       >
+        <Column
+          selectionMode="multiple"
+          headerStyle={{ width: "3rem" }}
+        ></Column>
+
         <Column
           style={{ width: "50px" }}
           field={"sentiment"}
@@ -193,7 +311,13 @@ const TableReviews = ({ reviews }) => {
           field="date"
           sortable
           body={(review) => (
-            <span className="text-sm w-[100px]">{review.date}</span>
+            <span className="text-sm w-[100px]">
+              {new Date(review?.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </span>
           )}
           header="Date"
         ></Column>
