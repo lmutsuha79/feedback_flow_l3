@@ -32,9 +32,6 @@ The beta version is available. You can check it out [here](https://feedback-flow
 
 ## Features I'm Currently Working On (To-Dos)
 
-- create bugs and feature page
-
-
 ================================================================
 
 ## Features I'm Done Working On (Done!)
@@ -57,7 +54,8 @@ The beta version is available. You can check it out [here](https://feedback-flow
 - The problem of duplication when adding a flag to db --> (solved)
 - Display a flag that indicates whether a review is a bug or a feature or not yet set --> (ok)
 - add feature flag to rows -> (ok)
-
+- create bugs and feature page --> (ok)
+- add remove bugs and feature functionality --> (ok)
 
 ================================================================
 

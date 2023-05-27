@@ -1,7 +1,9 @@
 import {
+  faBug,
   faComment,
   faDashboard,
   faFile,
+  faLightbulb,
   faQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -44,6 +46,30 @@ const HeaderTabs = () => {
           <Link href={"/dashboard/reviews"}>
             <FontAwesomeIcon icon={faComment} />
             <span className="ml-1">Reviews</span>
+          </Link>
+        </li>
+        <li
+          className={`rounded-md text-base font-medium transition-colors flex items-center cursor-pointer border-r p-2 ${
+            isActive("/dashboard/bugs")
+              ? "active bg-main_dark text-white"
+              : "bg-white text-main_dark"
+          }`}
+        >
+          <Link href={"/dashboard/bugs"}>
+            <FontAwesomeIcon icon={faBug} />
+            <span className="ml-1">Bugs</span>
+          </Link>
+        </li>
+        <li
+          className={`rounded-md text-base font-medium transition-colors flex items-center cursor-pointer border-r p-2 ${
+            isActive("/dashboard/features")
+              ? "active bg-main_dark text-white"
+              : "bg-white text-main_dark"
+          }`}
+        >
+          <Link href={"/dashboard/features"}>
+            <FontAwesomeIcon icon={faLightbulb} />
+            <span className="ml-1">Features</span>
           </Link>
         </li>
         <li

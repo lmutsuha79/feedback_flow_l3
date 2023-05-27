@@ -7,11 +7,19 @@ import { FilterMatchMode } from "primereact/api";
 import Image from "next/image";
 import SearchReviews from "./search-reviews";
 import AddFlagToRow from "./add-flag-to-row";
-import { Alert, Badge, Rating } from "flowbite-react";
-import { DashboardContext } from "@/pages/_app";
+import { Badge, Rating } from "flowbite-react";
 import useLocalStorage from "use-local-storage";
+import ReviewsPageHeader from "./reviews-page-header";
+import RemoveBug from "./remove-bug";
+import RemoveFeature from "./remove-feature";
 
-const TableReviews = ({ reviews }) => {
+const TableReviews = ({
+  reviews,
+  title,
+  addflagFunctionality,
+  removeBugFunctionality,
+  removeFeatureFunctionality,
+}) => {
   // const { currentApp } = useContext(DashboardContext);
   const [localBugs, setLocalBugs] = useLocalStorage("bugs", {});
   const [localFeatures, setLocalFeatures] = useLocalStorage("features", {});
@@ -21,8 +29,6 @@ const TableReviews = ({ reviews }) => {
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
-
- 
 
   const mapSentimentToEmoji = (sentiment) => {
     if (sentiment >= 4) {
@@ -60,22 +66,24 @@ const TableReviews = ({ reviews }) => {
 
   return (
     <main className="">
-      <Alert className="bg-main_dark ">
-        <span className="text-white">
-          <h3 className="font-medium underline text-lg mb-1">
-            Multiple Sort Column Selection: ⌘
-          </h3>
-          {`
-          
-           To select multiple columns for sorting, hold down the Ctrl key (Command key on macOS) while clicking on the column headers.
-          
-          This allows you to apply sorting to multiple columns simultaneously. Release the Ctrl key to finalize your selection.          `}
-        </span>
-      </Alert>
+      <ReviewsPageHeader title={title} />
 
       <div className="flex justify-between items-center mt-8">
         {/* add selected rows */}
-        <AddFlagToRow selectedReviews={selectedReviews} />
+        {/* turn on the add flag when the  FlagFunctionalityOff is false or not selected */}
+        {addflagFunctionality && (
+          <AddFlagToRow selectedReviews={selectedReviews} />
+        )}
+        {removeBugFunctionality && (
+          <RemoveBug selectedReviews={selectedReviews} />
+        )}
+        {removeFeatureFunctionality && (
+          <RemoveFeature selectedReviews={selectedReviews} />
+        )}
+
+        {/* to insure the search bar is in the right */}
+        <div></div>
+
         {/* search bar */}
         <SearchReviews
           onGlobalFilterChange={onGlobalFilterChange}

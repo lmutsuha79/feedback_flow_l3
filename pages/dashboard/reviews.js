@@ -98,14 +98,14 @@ const Reviews = () => {
     }
   }, [currentApp]);
 
-  useEffect(() => {
-    // console.log(reviews);
-  }, [reviews]);
-
   return (
     <DashboardLayout>
-      {reviews.length ? (
-        <TableReviews reviews={reviews} />
+      {reviews ? (
+        <TableReviews
+          title="All reviews"
+          reviews={reviews}
+          addflagFunctionality={true}
+        />
       ) : (
         <div className=" flex justify-center gap-4 pt-8">
           <Spinner

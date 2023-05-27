@@ -5,7 +5,6 @@ import {
   error_toast,
   info_toast,
   sucess_toast,
-  warn_toast,
 } from "@/util/toastNotification";
 import { faBug, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +13,11 @@ import { useContext, useState } from "react";
 import useLocalStorage from "use-local-storage";
 
 const AddFlagToRow = ({ selectedReviews }) => {
+  const [addToListOptionName, setAddToListOptionName] = useState(null);
+  const { currentApp } = useContext(DashboardContext);
+  const [localBugs, setLocalBugs] = useLocalStorage("bugs", {});
+  const [localFeatures, setLocalFeatures] = useLocalStorage("features", {});
+
   async function addToBugs() {
     try {
       // adding the selected rows as bugs to the db
@@ -147,10 +151,6 @@ const AddFlagToRow = ({ selectedReviews }) => {
       error_toast(error.message);
     }
   }
-  const [addToListOptionName, setAddToListOptionName] = useState(null);
-  const { currentApp } = useContext(DashboardContext);
-  const [localBugs, setLocalBugs] = useLocalStorage("bugs", {});
-  const [localFeatures, setLocalFeatures] = useLocalStorage("features", {});
 
   async function handleConfirmeMovingRows() {
     if (!addToListOptionName) {
