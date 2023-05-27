@@ -1,6 +1,10 @@
 import { supabase } from "@/lib/supabaseClient";
 import { DashboardContext } from "@/pages/_app";
-import { error_toast,sucess_toast,warn_toast } from "@/util/toastNotification";
+import {
+  error_toast,
+  sucess_toast,
+  warn_toast,
+} from "@/util/toastNotification";
 import { faBug, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dropdown } from "flowbite-react";
@@ -31,22 +35,7 @@ const AddFlagToRow = ({ selectedReviews }) => {
         throw new Error(error.message);
       }
 
-      const prev_bugs = data[0]?.value;
-
-      if (prev_bugs) {
-        console.log("update");
-
-        const { error } = await supabase
-          .from("bugs")
-          .update({ value: { ...prev_bugs, ...selectedReviews } })
-          .eq("app_id", currentApp.id);
-
-        if (error) {
-          throw new Error(error.message);
-        }
-
-        sucess_toast("Bugs successfully added to your bugs list.");
-      } else {
+      if (!data.length) {
         console.log("add the first time create bugs");
 
         await supabase.from("bugs").insert({
@@ -57,6 +46,31 @@ const AddFlagToRow = ({ selectedReviews }) => {
         warn_toast(
           "Successfully created a new bugs list for your application."
         );
+        sucess_toast("Bugs successfully added to your bugs list.");
+      } else {
+        console.log("update");
+        const prev_bugs = Object.values(data[0]?.value);
+
+        console.log("selected _reviews = ", selectedReviews);
+        console.log("prev_bugs = ", prev_bugs);
+
+        const mergedArray = [...prev_bugs, ...selectedReviews];
+        const uniqueObject = {};
+
+        mergedArray.forEach((obj, index) => {
+          uniqueObject[index] = obj;
+        });
+        const { error } = await supabase
+          .from("bugs")
+          .update({ value: uniqueObject })
+          .eq("app_id", currentApp.id);
+      
+      
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
         sucess_toast("Bugs successfully added to your bugs list.");
       }
     } catch (error) {

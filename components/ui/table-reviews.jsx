@@ -1,31 +1,63 @@
-import { supabase } from "@/lib/supabaseClient";
-import {
-  error_toast,
-  success_toast,
-  warn_toast,
-} from "@/util/toastNotification";
-import { useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { FilterMatchMode } from "primereact/api";
-import { InputText } from "primereact/inputtext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowDown,
-  faArrowUp,
-  faSearch,
-  faBug,
-  faLightbulb,
-} from "@fortawesome/free-solid-svg-icons";
-import ReviewRow from "./review-row";
+
 import Image from "next/image";
 import SearchReviews from "./search-reviews";
 import AddFlagToRow from "./add-flag-to-row";
-import { Alert, Rating } from "flowbite-react";
+import { Alert, Badge, Rating } from "flowbite-react";
+import { supabase } from "@/lib/supabaseClient";
+import { DashboardContext } from "@/pages/_app";
+import { error_toast } from "@/util/toastNotification";
 
 const TableReviews = ({ reviews }) => {
-  const [hoveredRow, setHoveredRow] = useState(null);
+  const { currentApp } = useContext(DashboardContext);
+
+  useEffect(() => {
+    console.log('lunch the use effect of table  reviews')
+    const fetchData = async () => {
+      try {
+        // get the data
+        const { data, error } = await supabase
+          .from("bugs")
+          .select("value")
+          .eq("app_id", currentApp.id);
+
+        if (error) {
+          throw new Error(error.message);
+        }
+        if (!data.length) {
+          return;
+        }
+
+        const bugs_arr = Object.values(data[0]?.value);
+        const bugs_ids = bugs_arr.map((bug) => bug.id);
+
+        // add falgs to the coresponding rows
+        // remove the display hidden from rows that contains bugs
+        bugs_ids.forEach((id) => {
+          const container_flags = document.getElementById(
+            `container_flag_id_${id}`
+          );
+          container_flags
+            .querySelector(".badge_bug")
+            .classList.remove("hidden");
+        });
+
+        console.log(bugs_ids);
+      } catch (error) {
+        console.log(error);
+        error_toast(error.message);
+      }
+
+      // console.log("TableReviews rendering");
+    };
+
+    fetchData();
+  }, []);
+
   const [selectedReviews, setSelectedReviews] = useState([]);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [filters, setFilters] = useState({
@@ -140,6 +172,30 @@ const TableReviews = ({ reviews }) => {
           header="Sentiment"
           sortable
         ></Column>
+        <Column
+          style={{ width: "50px" }}
+          field={""}
+          body={(review) => (
+            <div
+              className="flex flex-col gap-2"
+              id={`container_flag_id_${review.id}`}
+            >
+              <Badge className="badge_bug hidden" size={"lg"} color="failure">
+                Bug
+              </Badge>
+              <Badge
+                className="badge_feature hidden"
+                size={"lg"}
+                color="success"
+              >
+                Feature
+              </Badge>
+            </div>
+          )}
+          header="Flag"
+          // sortable
+        ></Column>
+
         <Column
           style={{ width: "50px" }}
           field={(review) => (
