@@ -12,30 +12,17 @@ import { DashboardContext } from "@/pages/_app";
 import useLocalStorage from "use-local-storage";
 
 const TableReviews = ({ reviews }) => {
-  const { currentApp } = useContext(DashboardContext);
+  // const { currentApp } = useContext(DashboardContext);
   const [localBugs, setLocalBugs] = useLocalStorage("bugs", {});
+  const [localFeatures, setLocalFeatures] = useLocalStorage("features", {});
+
   const [selectedReviews, setSelectedReviews] = useState([]);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
 
-  useEffect(() => {
-    console.log("lunch the use effect of table  reviews");
-
-    if (!localBugs?.bugs_arr?.length) {
-      console.log("no bugs found in the local storage");
-      return;
-    }
-    console.log("finding bugs in the local storage...");
-    const bugs_ids = localBugs.bugs_arr.map((bug) => bug.id);
-    // bugs_ids?.forEach((id) => {
-    //   const container_flags = document.getElementById(
-    //     `container_flag_id_${id}`
-    //   );
-    //   container_flags?.querySelector(".badge_bug").classList.remove("hidden");
-    // });
-  }, [reviews, currentApp, localBugs, selectedReviews]);
+ 
 
   const mapSentimentToEmoji = (sentiment) => {
     if (sentiment >= 4) {
@@ -158,9 +145,16 @@ const TableReviews = ({ reviews }) => {
                 className="flex flex-col gap-2"
                 id={`container_flag_id_${review.id}`}
               >
-                {localBugs?.bugs_arr?.some(obj => obj.id == review.id) && (
+                {localBugs?.bugs_arr?.some((obj) => obj.id == review.id) && (
                   <Badge className="badge_bug " size={"lg"} color="failure">
                     Bug
+                  </Badge>
+                )}
+                {localFeatures?.features_arr?.some(
+                  (obj) => obj.id == review.id
+                ) && (
+                  <Badge className="badge_feature " size={"lg"} color="success">
+                    Feature
                   </Badge>
                 )}
 

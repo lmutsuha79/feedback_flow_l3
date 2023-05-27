@@ -1,23 +1,14 @@
 import DashboardLayout from "@/components/layout/dashboard-layout";
-import { Table, Dropdown, Spinner } from "flowbite-react";
+import { Spinner } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
 import { DashboardContext } from "../_app";
-import {
-  faArrowDown,
-  faArrowDownShortWide,
-  faArrowUp,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   turnOffLoadinScreen,
   turnOnLoadingScreen,
 } from "@/util/loadingFunctions";
-import ReviewRow from "@/components/ui/review-row";
 import useLocalStorage from "use-local-storage";
-import ScoreStepsRange from "@/components/ui/score-steps-range";
 import TableReviews from "@/components/ui/table-reviews";
 import { supabase } from "@/lib/supabaseClient";
-import mergeArrays from "@/util/merge-array-without-duplication";
 
 const Reviews = () => {
   const { currentApp } = useContext(DashboardContext);
@@ -25,50 +16,8 @@ const Reviews = () => {
 
   const [localReviews, setLocalReviews] = useLocalStorage("reviews", {});
   const [localBugs, setLocalBugs] = useLocalStorage("bugs", {});
-
-  async function getReviews() {
-    turnOnLoadingScreen();
-
-    // check if the local reviews is exist and coresponding to the current app
-    if (
-      localReviews?.appId === currentApp.id &&
-      localReviews?.reviews?.length > 0
-    ) {
-      console.log("from the local storage");
-      try {
-        console.log('checking if local bugs are updated with db bugs')
-        const { data, error } = await supabase
-          .from("bugs")
-          .select("value")
-          .eq("app_id", currentApp.id);
-        if (error) {
-          throw new Error(error);
-        }
-        if (data.length) {
-          const bugs_arr = Object.values(data[0]?.value);
-
-          setLocalBugs({ appId: currentApp.id, bugs_arr });
-        } else {
-          setLocalBugs({ appId: currentApp.id, bugs_arr: [] });
-        }
-      } catch (error) {
-        console.log(error);
-      }
-      turnOffLoadinScreen();
-      return localReviews.reviews;
-    }
-    // get the reviews from the server
-    console.log("get reviews from server");
-    const { gplay_id } = currentApp;
-    const res = await fetch("/api/get-reviews", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        gplay_id,
-      }),
-    });
-    const { reviews } = await res.json();
-    // get the bugs reviews from the db
+  const [localFeatures, setLocalFeatures] = useLocalStorage("features", {});
+  async function set_up_local_bugs() {
     try {
       const { data, error } = await supabase
         .from("bugs")
@@ -87,6 +36,56 @@ const Reviews = () => {
     } catch (error) {
       console.log(error);
     }
+  }
+  async function set_up_local_features() {
+    try {
+      const { data, error } = await supabase
+        .from("features")
+        .select("value")
+        .eq("app_id", currentApp.id);
+      if (error) {
+        throw new Error(error);
+      }
+      if (data.length) {
+        const features_arr = Object.values(data[0]?.value);
+
+        setLocalFeatures({ appId: currentApp.id, features_arr });
+      } else {
+        setLocalFeatures({ appId: currentApp.id, features_arr: [] });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function getReviews() {
+    turnOnLoadingScreen();
+    await set_up_local_bugs();
+    await set_up_local_features();
+
+    // check if the local reviews is exist and coresponding to the current app
+    if (
+      localReviews?.appId === currentApp.id &&
+      localReviews?.reviews?.length > 0
+    ) {
+      console.log("from the local storage");
+
+      turnOffLoadinScreen();
+      return localReviews.reviews;
+    }
+
+    // this part excute when no local reviews were found
+    // get the reviews from the server
+    console.log("get reviews from server");
+    const { gplay_id } = currentApp;
+    const res = await fetch("/api/get-reviews", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        gplay_id,
+      }),
+    });
+    const { reviews } = await res.json();
+    // get the bugs reviews from the db
 
     // store the new reviews to the local storage
     setLocalReviews({ appId: currentApp.id, reviews });
