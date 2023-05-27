@@ -16,14 +16,15 @@ import ReviewRow from "@/components/ui/review-row";
 import useLocalStorage from "use-local-storage";
 import ScoreStepsRange from "@/components/ui/score-steps-range";
 import TableReviews from "@/components/ui/table-reviews";
+import { supabase } from "@/lib/supabaseClient";
+import mergeArrays from "@/util/merge-array-without-duplication";
 
 const Reviews = () => {
-  
-
   const { currentApp } = useContext(DashboardContext);
   const [reviews, setReviews] = useState([]);
 
   const [localReviews, setLocalReviews] = useLocalStorage("reviews", {});
+  const [localBugs, setLocalBugs] = useLocalStorage("bugs", {});
 
   async function getReviews() {
     turnOnLoadingScreen();
@@ -34,7 +35,25 @@ const Reviews = () => {
       localReviews?.reviews?.length > 0
     ) {
       console.log("from the local storage");
+      try {
+        console.log('checking if local bugs are updated with db bugs')
+        const { data, error } = await supabase
+          .from("bugs")
+          .select("value")
+          .eq("app_id", currentApp.id);
+        if (error) {
+          throw new Error(error);
+        }
+        if (data.length) {
+          const bugs_arr = Object.values(data[0]?.value);
 
+          setLocalBugs({ appId: currentApp.id, bugs_arr });
+        } else {
+          setLocalBugs({ appId: currentApp.id, bugs_arr: [] });
+        }
+      } catch (error) {
+        console.log(error);
+      }
       turnOffLoadinScreen();
       return localReviews.reviews;
     }
@@ -49,6 +68,26 @@ const Reviews = () => {
       }),
     });
     const { reviews } = await res.json();
+    // get the bugs reviews from the db
+    try {
+      const { data, error } = await supabase
+        .from("bugs")
+        .select("value")
+        .eq("app_id", currentApp.id);
+      if (error) {
+        throw new Error(error);
+      }
+      if (data.length) {
+        const bugs_arr = Object.values(data[0]?.value);
+
+        setLocalBugs({ appId: currentApp.id, bugs_arr });
+      } else {
+        setLocalBugs({ appId: currentApp.id, bugs_arr: [] });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
     // store the new reviews to the local storage
     setLocalReviews({ appId: currentApp.id, reviews });
     turnOffLoadinScreen();

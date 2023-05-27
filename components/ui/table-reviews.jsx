@@ -8,61 +8,34 @@ import Image from "next/image";
 import SearchReviews from "./search-reviews";
 import AddFlagToRow from "./add-flag-to-row";
 import { Alert, Badge, Rating } from "flowbite-react";
-import { supabase } from "@/lib/supabaseClient";
 import { DashboardContext } from "@/pages/_app";
-import { error_toast } from "@/util/toastNotification";
+import useLocalStorage from "use-local-storage";
 
 const TableReviews = ({ reviews }) => {
   const { currentApp } = useContext(DashboardContext);
-
-  useEffect(() => {
-    console.log('lunch the use effect of table  reviews')
-    const fetchData = async () => {
-      try {
-        // get the data
-        const { data, error } = await supabase
-          .from("bugs")
-          .select("value")
-          .eq("app_id", currentApp.id);
-
-        if (error) {
-          throw new Error(error.message);
-        }
-        if (!data.length) {
-          return;
-        }
-
-        const bugs_arr = Object.values(data[0]?.value);
-        const bugs_ids = bugs_arr.map((bug) => bug.id);
-
-        // add falgs to the coresponding rows
-        // remove the display hidden from rows that contains bugs
-        bugs_ids.forEach((id) => {
-          const container_flags = document.getElementById(
-            `container_flag_id_${id}`
-          );
-          container_flags
-            .querySelector(".badge_bug")
-            .classList.remove("hidden");
-        });
-
-        console.log(bugs_ids);
-      } catch (error) {
-        console.log(error);
-        error_toast(error.message);
-      }
-
-      // console.log("TableReviews rendering");
-    };
-
-    fetchData();
-  }, []);
-
+  const [localBugs, setLocalBugs] = useLocalStorage("bugs", {});
   const [selectedReviews, setSelectedReviews] = useState([]);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
+
+  useEffect(() => {
+    console.log("lunch the use effect of table  reviews");
+
+    if (!localBugs?.bugs_arr?.length) {
+      console.log("no bugs found in the local storage");
+      return;
+    }
+    console.log("finding bugs in the local storage...");
+    const bugs_ids = localBugs.bugs_arr.map((bug) => bug.id);
+    // bugs_ids?.forEach((id) => {
+    //   const container_flags = document.getElementById(
+    //     `container_flag_id_${id}`
+    //   );
+    //   container_flags?.querySelector(".badge_bug").classList.remove("hidden");
+    // });
+  }, [reviews, currentApp, localBugs, selectedReviews]);
 
   const mapSentimentToEmoji = (sentiment) => {
     if (sentiment >= 4) {
@@ -172,26 +145,31 @@ const TableReviews = ({ reviews }) => {
           header="Sentiment"
           sortable
         ></Column>
+
         <Column
           style={{ width: "50px" }}
           field={""}
-          body={(review) => (
-            <div
-              className="flex flex-col gap-2"
-              id={`container_flag_id_${review.id}`}
-            >
-              <Badge className="badge_bug hidden" size={"lg"} color="failure">
-                Bug
-              </Badge>
-              <Badge
-                className="badge_feature hidden"
-                size={"lg"}
-                color="success"
+          body={(review) => {
+            // localBugs.bugs_arr.forEach((bug_obj) =>
+            //   bug_obj.id == review.id ? true : false
+            // );
+            return (
+              <div
+                className="flex flex-col gap-2"
+                id={`container_flag_id_${review.id}`}
               >
-                Feature
-              </Badge>
-            </div>
-          )}
+                {localBugs?.bugs_arr?.some(obj => obj.id == review.id) && (
+                  <Badge className="badge_bug " size={"lg"} color="failure">
+                    Bug
+                  </Badge>
+                )}
+
+                {/* <Badge className="badge_feature " size={"lg"} color="success">
+                  Feature
+                </Badge> */}
+              </div>
+            );
+          }}
           header="Flag"
           // sortable
         ></Column>

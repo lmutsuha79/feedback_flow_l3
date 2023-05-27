@@ -15,7 +15,7 @@ export const warn_toast = (message, position) => {
     position: position ? position : "bottom-right",
   });
 };
-export const info = (message, position) => {
+export const info_toast = (message, position) => {
   toast.info(message, {
     position: position ? position : "bottom-right",
   });

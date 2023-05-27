@@ -1,7 +1,9 @@
 import { supabase } from "@/lib/supabaseClient";
 import { DashboardContext } from "@/pages/_app";
+import mergeArrays from "@/util/merge-array-without-duplication";
 import {
   error_toast,
+  info_toast,
   sucess_toast,
   warn_toast,
 } from "@/util/toastNotification";
@@ -9,10 +11,12 @@ import { faBug, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dropdown } from "flowbite-react";
 import { useContext, useState } from "react";
+import useLocalStorage from "use-local-storage";
 
 const AddFlagToRow = ({ selectedReviews }) => {
   const [addToListOptionName, setAddToListOptionName] = useState(null);
   const { currentApp } = useContext(DashboardContext);
+  const [localBugs, setLocalBugs] = useLocalStorage("bugs", {});
 
   async function handleConfirmeMovingRows() {
     if (!addToListOptionName) {
@@ -26,6 +30,7 @@ const AddFlagToRow = ({ selectedReviews }) => {
     }
 
     try {
+      // adding the selected rows as bugs to the db
       const { data, error } = await supabase
         .from("bugs")
         .select("value")
@@ -34,16 +39,21 @@ const AddFlagToRow = ({ selectedReviews }) => {
       if (error) {
         throw new Error(error.message);
       }
-
+      // if no previews bugs were found in the db bugs table
       if (!data.length) {
         console.log("add the first time create bugs");
-
-        await supabase.from("bugs").insert({
+        // add the new bugs to the db
+        const { error } = await supabase.from("bugs").insert({
           app_id: currentApp.id,
           value: { ...selectedReviews },
         });
+        if (error) {
+          throw new Error(error.message);
+        }
+        //   insert the new bugs to the local storage
+        setLocalBugs({ appId: currentApp.id, bugs_arr: [...selectedReviews] });
 
-        warn_toast(
+        info_toast(
           "Successfully created a new bugs list for your application."
         );
         sucess_toast("Bugs successfully added to your bugs list.");
@@ -54,22 +64,33 @@ const AddFlagToRow = ({ selectedReviews }) => {
         console.log("selected _reviews = ", selectedReviews);
         console.log("prev_bugs = ", prev_bugs);
 
-        const mergedArray = [...prev_bugs, ...selectedReviews];
-        const uniqueObject = {};
+        //   const mergedArray = [...prev_bugs, ...selectedReviews];
+        //   const uniqueObject = {};
 
-        mergedArray.forEach((obj, index) => {
-          uniqueObject[index] = obj;
-        });
+        //   mergedArray.forEach((obj, index) => {
+        //     uniqueObject[index] = obj;
+        //   });
+        const merged_array_into_obj = mergeArrays(
+          prev_bugs,
+          selectedReviews
+        ).reduce((obj, value, index) => {
+          obj[index] = value;
+          return obj;
+        }, {});
+        //   console.log("merged array", merged_array_into_obj);
         const { error } = await supabase
           .from("bugs")
-          .update({ value: uniqueObject })
+          .update({ value: merged_array_into_obj })
           .eq("app_id", currentApp.id);
-      
-      
+        //   console.log("data", data);
 
         if (error) {
           throw new Error(error.message);
         }
+        setLocalBugs({
+          appId: currentApp.id,
+          bugs_arr: [...Object.values(merged_array_into_obj)],
+        });
 
         sucess_toast("Bugs successfully added to your bugs list.");
       }
