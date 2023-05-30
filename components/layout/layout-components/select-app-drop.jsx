@@ -3,15 +3,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Button, Dropdown } from "flowbite-react";
 import AddNewAppId from "./add-nex-app-id";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const SelectAppDropDown = ({
   apps_of_user,
   selectedAppIndex,
   setSelectedAppIndex,
   showModal,
-  setlocalSelectedAppIndex
+  setlocalSelectedAppIndex,
 }) => {
   // console.log("slect app render");
+  const router = useRouter();
+
+  function handleAppItemClick(index) {
+    setSelectedAppIndex(index);
+    setlocalSelectedAppIndex(index);
+    router.push("/dashboard/reviews");
+  }
 
   return (
     <>
@@ -48,10 +56,7 @@ const SelectAppDropDown = ({
                 {/* ########################### */}
                 {apps_of_user.map((item, index) => (
                   <Dropdown.Item
-                    onClick={() => {
-                      setSelectedAppIndex(index);
-                      setlocalSelectedAppIndex(index);
-                    }}
+                    onClick={() => handleAppItemClick(index)}
                     className={index === selectedAppIndex ? "bg-blue_gray" : ""}
                     key={item.id}
                   >

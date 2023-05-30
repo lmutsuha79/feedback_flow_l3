@@ -24,6 +24,11 @@ const DashboardLayout = ({ children }) => {
 
   const [apps_of_user, setAppsOfUser] = useState([]);
   const [selectedAppIndex, setSelectedAppIndex] = useState(null);
+  const [localSelectedAppIndex, setlocalSelectedAppIndex] = useLocalStorage(
+    "index",
+    0
+  );
+ 
 
   const { currentApp, setCurrentApp } = useContext(DashboardContext);
 
@@ -41,10 +46,6 @@ const DashboardLayout = ({ children }) => {
       getAppsByUser();
     }
   }, [user, selectedAppIndex]);
-  const [localSelectedAppIndex, setlocalSelectedAppIndex] = useLocalStorage(
-    "index",
-    0
-  );
 
   // get all apps that are related to the user and store them inside the appsOfUser state
   async function getAppsByUser() {
