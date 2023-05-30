@@ -102,7 +102,7 @@ const DashboardLayout = ({ children }) => {
           close={closeModal}
           setlocalSelectedAppIndex={setlocalSelectedAppIndex}
         />
-        <div className="container pt-4 min-h-screen ">
+        <div className=" px-8 rounded-md pt-4 min-h-screen ">
           <div className=" shadow-xl  border-slate-200 rounded-md h-full">
             <nav className="h-[64px] border">
               <div className="p-2 flex items-center justify-between">

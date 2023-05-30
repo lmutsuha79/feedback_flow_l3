@@ -32,6 +32,8 @@ The beta version is available. You can check it out [here](https://feedback-flow
 
 ## Features I'm Currently Working On (To-Dos)
 
+- remove local bugs and features when logout or change the current app;
+
 ================================================================
 
 ## Features I'm Done Working On (Done!)

@@ -12,6 +12,7 @@ import useLocalStorage from "use-local-storage";
 import ReviewsPageHeader from "./reviews-page-header";
 import RemoveBug from "./remove-bug";
 import RemoveFeature from "./remove-feature";
+import { mapSentimentToEmoji } from "@/util/mapSentimentToEmoji.js";
 
 const TableReviews = ({
   reviews,
@@ -29,29 +30,6 @@ const TableReviews = ({
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
-
-  const mapSentimentToEmoji = (sentiment) => {
-    if (sentiment >= 4) {
-      return "😍"; // Very positive emoji
-    }
-    if (sentiment >= 2) {
-      return "😄"; // Positive emoji
-    }
-    if (sentiment > 0) {
-      return "🙂"; // Slightly positive emoji
-    }
-    if (sentiment === 0) {
-      return "😐"; // Neutral emoji
-    }
-    if (sentiment >= -1) {
-      return "😔"; // Slightly negative emoji
-    }
-    if (sentiment >= -4) {
-      return "😞"; // Negative emoji
-    } else {
-      return "😡"; // Very negative emoji
-    }
-  };
 
   const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
   const paginatorRight = <Button type="button" icon="pi pi-download" text />;

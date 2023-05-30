@@ -25,6 +25,7 @@ import Link from "next/link";
 import NumbersContainer from "@/components/overview-components/numbers-container";
 import ReviewsShower from "@/components/overview-components/reviews-shower";
 import useLocalStorage from "use-local-storage";
+import EmotionCircleChart from "@/components/overview-components/emotion-chircle-chart";
 
 const Dashboard = () => {
   const [chartData, setChartData] = useState({});
@@ -33,6 +34,29 @@ const Dashboard = () => {
   const [localBugs, setLocalBugs] = useLocalStorage("bugs", {});
   const [localFeatures, setLocalFeatures] = useLocalStorage("features", {});
   const [localReviews, setLocalReviews] = useLocalStorage("reviews", {});
+
+  const [sentimentCounter, setSentimentCounter] = useState({
+    good: 0,
+    bad: 0,
+    natural: 0,
+  });
+  useEffect(() => {
+    let good = 0;
+    let bad = 0;
+    let natural = 0;
+    localReviews?.reviews?.forEach((review) => {
+      if (review.sentiment === 0) {
+        natural += 1;
+      }
+      if (review.sentiment > 0) {
+        good += 1;
+      }
+      if (review.sentiment < 0) {
+        bad += 1;
+      }
+    });
+    setSentimentCounter({ good, bad, natural });
+  }, [localReviews]);
 
   useEffect(() => {
     const data = {
@@ -87,21 +111,17 @@ const Dashboard = () => {
           localReviews={localReviews}
           localFeatures={localFeatures}
           localBugs={localBugs}
+          sentimentCounter={sentimentCounter}
         />
 
-        <div className="mt-8 h-[400px] flex items-center gap-8 ">
-          <div className="w-[65%] h-full border border-slate-200 shadow-lg p-8 rounded-md">
-            <Chart
-              className="w-full h-full"
-              type="bar"
-              data={chartData}
-              options={chartOptions}
-            />
+        <div className="mt-8 h-[500px] flex items-center gap-8 ">
+          <div className="w-[60%] h-full border border-slate-200 shadow-lg p-8 rounded-md">
+            <EmotionCircleChart sentimentCounter={sentimentCounter} />
           </div>
 
           {/* recent feedbacks */}
-          <div className="w-[35%] h-full overflow-y-scroll border border-slate-200 shadow-lg px-4 py-8 rounded-md">
-            <ReviewsShower />
+          <div className="w-[40%] h-full  border border-slate-200 shadow-lg px-4 py-8 rounded-md">
+            <ReviewsShower localReviews={localReviews} />
           </div>
         </div>
       </main>

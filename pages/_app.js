@@ -39,12 +39,7 @@ export default function App({ Component, pageProps }) {
     currentApp,
     setCurrentApp,
   };
-  // useEffect(() => {
-  //   console.log('try to load curren app from __App.js')
-  //   if (currentApp) {
-  //     console.log("{{{############################}}}" + currentApp);
-  //   }
-  // }, [currentApp]);
+
 
   return (
     <SessionContextProvider
