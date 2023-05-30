@@ -26,6 +26,7 @@ import NumbersContainer from "@/components/overview-components/numbers-container
 import ReviewsShower from "@/components/overview-components/reviews-shower";
 import useLocalStorage from "use-local-storage";
 import EmotionCircleChart from "@/components/overview-components/emotion-chircle-chart";
+import GptOverView from "@/components/overview-components/gpt-overview";
 
 const Dashboard = () => {
   const [chartData, setChartData] = useState({});
@@ -91,6 +92,13 @@ const Dashboard = () => {
 
     setChartData(data);
     setChartOptions(options);
+
+    console.log(
+      localReviews.reviews
+        .slice(0, 100)
+        .map((review) => review.text)
+        .join(",\n")
+    );
   }, []);
   return (
     <DashboardLayout>
@@ -114,7 +122,7 @@ const Dashboard = () => {
           sentimentCounter={sentimentCounter}
         />
 
-        <div className="mt-8 h-[500px] flex items-center gap-8 ">
+        <div className="mt-8 h-[500px] overflow-scroll flex items-center gap-8 ">
           <div className="w-[60%] h-full border border-slate-200 shadow-lg p-8 rounded-md">
             <EmotionCircleChart sentimentCounter={sentimentCounter} />
           </div>
@@ -124,6 +132,8 @@ const Dashboard = () => {
             <ReviewsShower localReviews={localReviews} />
           </div>
         </div>
+
+        <GptOverView />
       </main>
     </DashboardLayout>
   );
