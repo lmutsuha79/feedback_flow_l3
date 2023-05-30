@@ -56,8 +56,11 @@ const Dashboard = () => {
         bad += 1;
       }
     });
+    console.log('seting sentimenta')
+
     setSentimentCounter({ good, bad, natural });
   }, [localReviews]);
+
 
   useEffect(() => {
     const data = {
@@ -102,16 +105,7 @@ const Dashboard = () => {
   }, []);
   return (
     <DashboardLayout>
-      {/* total number of collected reviews and feedbacks */}
-      {/* total score of satisfaction of the users */}
-      {/* satisfaction score from the last version only */}
-      {/* total number of bugs and features in top of each other */}
-      {/* ############################################################# */}
-      {/* use gpt to dsipaly what most recent feedbacks says about the usr app */}
-      {/* ################################################################ */}
-      {/* display recent feedbacks or top feedbacks */}
-      {/* dipaly a chart that diplay the satisfaction of users aver time or over version */}
-      {/* add other charts  */}
+   
 
       <main className="mt-4">
         {/* numbers */}
@@ -121,6 +115,7 @@ const Dashboard = () => {
           localBugs={localBugs}
           sentimentCounter={sentimentCounter}
         />
+        {console.log(sentimentCounter)}
 
         <div className="mt-8 h-[500px] overflow-scroll flex items-center gap-8 ">
           <div className="w-[60%] h-full border border-slate-200 shadow-lg p-8 rounded-md">
