@@ -27,7 +27,7 @@ const HeaderTabs = () => {
           className={`rounded-md text-base font-medium transition-colors flex items-center cursor-pointer border-r p-2 ${
             isActive("/dashboard")
               ? "active bg-main_dark text-white"
-              : "bg-white text-main_dark"
+              : "bg-white text-main_dark hover:bg-main_dark hover:text-white"
           }`}
         >
           {" "}
@@ -40,7 +40,7 @@ const HeaderTabs = () => {
           className={`rounded-md text-base font-medium transition-colors flex items-center cursor-pointer border-r p-2 ${
             isActive("/dashboard/reviews")
               ? "active bg-main_dark text-white"
-              : "bg-white text-main_dark"
+              : "bg-white text-main_dark hover:bg-main_dark hover:text-white"
           }`}
         >
           <Link href={"/dashboard/reviews"}>
@@ -52,7 +52,7 @@ const HeaderTabs = () => {
           className={`rounded-md text-base font-medium transition-colors flex items-center cursor-pointer border-r p-2 ${
             isActive("/dashboard/bugs")
               ? "active bg-main_dark text-white"
-              : "bg-white text-main_dark"
+              : "bg-white text-main_dark hover:bg-main_dark hover:text-white"
           }`}
         >
           <Link href={"/dashboard/bugs"}>
@@ -64,7 +64,7 @@ const HeaderTabs = () => {
           className={`rounded-md text-base font-medium transition-colors flex items-center cursor-pointer border-r p-2 ${
             isActive("/dashboard/features")
               ? "active bg-main_dark text-white"
-              : "bg-white text-main_dark"
+              : "bg-white text-main_dark hover:bg-main_dark hover:text-white"
           }`}
         >
           <Link href={"/dashboard/features"}>
@@ -88,7 +88,7 @@ const HeaderTabs = () => {
           className={`rounded-md text-base font-medium transition-colors flex items-center cursor-pointer border-r p-2 ${
             isActive("/dashboard/about")
               ? "active bg-main_dark text-white"
-              : "bg-white text-main_dark"
+              : "bg-white text-main_dark hover:bg-main_dark hover:text-white"
           }`}
         >
           <Link href={"/dashboard/about"}>

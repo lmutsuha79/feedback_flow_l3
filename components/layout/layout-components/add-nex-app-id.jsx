@@ -10,6 +10,7 @@ import {
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal, Tooltip } from "flowbite-react";
+import { useRouter } from "next/router";
 
 const AddNewAppId = ({
   isActive,
@@ -18,6 +19,8 @@ const AddNewAppId = ({
   numberOfApps,
   setlocalSelectedAppIndex,
 }) => {
+  const router = useRouter();
+
   async function submitAddingNewApp() {
     turnOnLoadingScreen();
 
@@ -48,6 +51,7 @@ const AddNewAppId = ({
       setSelectedAppIndex(numberOfApps);
       setlocalSelectedAppIndex(numberOfApps);
       close();
+      router.push("/dashboard/reviews");
     } catch (err) {
       console.log("the error from catch is " + err);
       error_toast(err.toString());
