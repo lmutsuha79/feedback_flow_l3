@@ -33,7 +33,7 @@ The beta version is available. You can check it out [here](https://feedback-flow
 ## Features I'm Currently Working On (To-Dos)
 
 - user page
-- about page
+- pie chart problem
 
 ================================================================
 
@@ -64,7 +64,7 @@ The beta version is available. You can check it out [here](https://feedback-flow
 - footer component --> (ok)
 - landing page --> (ok)
 - download reviews button functionality --> (ok)
-
+- about page --> (ok)
 
 ================================================================
 

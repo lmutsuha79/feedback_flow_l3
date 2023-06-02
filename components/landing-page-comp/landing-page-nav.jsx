@@ -4,7 +4,7 @@ import { Button } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const LandingPageNav = ({active}) => {
+const LandingPageNav = ({ active }) => {
   return (
     <nav className="px-8 py-4">
       {/* logo */}
@@ -20,27 +20,30 @@ const LandingPageNav = ({active}) => {
           />
           <div className="space-x-4">
             <Link
-              className={`${active === "home" ? "text-main_dark" : "text-main_text"} hover:text-main_dark font-medium transition-colors`}
-              href={"#"}
-              
+              className={`${
+                active === "home" ? "text-main_dark" : "text-main_text"
+              } hover:text-main_dark font-medium transition-colors`}
+              href={"/"}
             >
               Home
             </Link>
             <Link
               className="text-main_text hover:text-main_dark font-medium transition-colors"
-              href={"#"}
+              href={"/#features"}
             >
               Features
             </Link>
             <Link
               className="text-main_text hover:text-main_dark font-medium transition-colors"
-              href={"#"}
+              href={"/#pricing"}
             >
               Pricing
             </Link>
             <Link
-              className="text-main_text hover:text-main_dark font-medium transition-colors"
-              href={"#"}
+              className={`${
+                active === "about" ? "text-main_dark" : "text-main_text"
+              } hover:text-main_dark font-medium transition-colors`}
+              href={"/about"}
             >
               About
             </Link>
