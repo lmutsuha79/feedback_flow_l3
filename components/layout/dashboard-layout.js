@@ -17,6 +17,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 //core
 import "primereact/resources/primereact.min.css";
+import Footer from "../landing-page-comp/footer";
 
 const DashboardLayout = ({ children }) => {
   console.log("the dashboard layout is rendered");
@@ -28,7 +29,6 @@ const DashboardLayout = ({ children }) => {
     "index",
     0
   );
- 
 
   const { currentApp, setCurrentApp } = useContext(DashboardContext);
 
@@ -128,6 +128,8 @@ const DashboardLayout = ({ children }) => {
             <DashboardHeader />
 
             <main className="py-4 px-8">{children}</main>
+
+            <Footer />
           </div>
         </div>
       </>

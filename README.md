@@ -33,11 +33,7 @@ The beta version is available. You can check it out [here](https://feedback-flow
 ## Features I'm Currently Working On (To-Dos)
 
 - user page
-- delete apps
-- download reviews button functionality
-- landing page
 - about page
-- footer component
 
 ================================================================
 
@@ -64,6 +60,11 @@ The beta version is available. You can check it out [here](https://feedback-flow
 - create bugs and feature page --> (ok)
 - add remove bugs and feature functionality --> (ok)
 - redirect user to reviews page when select other app or creates new one to solve old reviews problem --> (ok)
+- delete apps --> (ok)
+- footer component --> (ok)
+- landing page --> (ok)
+- download reviews button functionality --> (ok)
+
 
 ================================================================
 
