@@ -1,31 +1,10 @@
 import DashboardLayout from "@/components/layout/dashboard-layout";
-import NumberCard from "@/components/overview-components/number-card";
-import { faLightbulb } from "@fortawesome/free-regular-svg-icons";
 
-import { Chart } from "primereact/chart";
-
-import {
-  faBug,
-  faCalendar,
-  faCircleInfo,
-  faComment,
-  faDashboard,
-  faDownload,
-  faEye,
-  faFile,
-  faFilter,
-  faHeartPulse,
-  faInfo,
-  faQuestion,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
+
 import NumbersContainer from "@/components/overview-components/numbers-container";
 import ReviewsShower from "@/components/overview-components/reviews-shower";
 import useLocalStorage from "use-local-storage";
-import EmotionCircleChart from "@/components/overview-components/emotion-chircle-chart";
 import GptOverView from "@/components/overview-components/gpt-overview";
 
 const Dashboard = () => {
@@ -56,11 +35,10 @@ const Dashboard = () => {
         bad += 1;
       }
     });
-    console.log('seting sentimenta')
+    console.log("seting sentimenta");
 
     setSentimentCounter({ good, bad, natural });
   }, [localReviews]);
-
 
   useEffect(() => {
     const data = {
@@ -96,17 +74,15 @@ const Dashboard = () => {
     setChartData(data);
     setChartOptions(options);
 
-    console.log(
-      localReviews.reviews
-        .slice(0, 100)
-        .map((review) => review.text)
-        .join(",\n")
-    );
+    // console.log(
+    //   localReviews?.reviews
+    //     .slice(0, 100)
+    //     .map((review) => review.text)
+    //     .join(",\n")
+    // );
   }, []);
   return (
     <DashboardLayout>
-   
-
       <main className="mt-4">
         {/* numbers */}
         <NumbersContainer
@@ -119,7 +95,7 @@ const Dashboard = () => {
 
         <div className="mt-8 h-[500px] overflow-scroll flex items-center gap-8 ">
           <div className="w-[60%] h-full border border-slate-200 shadow-lg p-8 rounded-md">
-            <EmotionCircleChart sentimentCounter={sentimentCounter} />
+            {/* <EmotionCircleChart sentimentCounter={sentimentCounter} /> */}
           </div>
 
           {/* recent feedbacks */}

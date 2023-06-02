@@ -1,9 +1,19 @@
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAdd,
+  faDeleteLeft,
+  faTrash,
+  faWarning,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Button, Dropdown } from "flowbite-react";
 import AddNewAppId from "./add-nex-app-id";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { error_toast, sucess_toast } from "@/util/toastNotification";
+import { useUser } from "@supabase/auth-helpers-react";
+import { supabase } from "@/lib/supabaseClient";
+import css from "styled-jsx/css";
 
 const SelectAppDropDown = ({
   apps_of_user,
@@ -14,12 +24,46 @@ const SelectAppDropDown = ({
 }) => {
   // console.log("slect app render");
   const router = useRouter();
+  const user = useUser();
 
   function handleAppItemClick(index) {
     setSelectedAppIndex(index);
     setlocalSelectedAppIndex(index);
     router.push("/dashboard/reviews");
   }
+  const accept = () => {
+    deleteApp(apps_of_user[selectedAppIndex].id);
+  };
+
+  async function deleteApp(id) {
+    //1 check if the current user is the app owner
+    if (apps_of_user[selectedAppIndex].user_id === user.id) {
+      const { error } = await supabase.from("apps").delete().eq("id", id);
+      if (error) {
+        error_toast(error.message);
+        return;
+      }
+      sucess_toast("the app was successfully deleted");
+      setlocalSelectedAppIndex(0);
+      setSelectedAppIndex(0);
+    } else {
+      error_toast("you dont have permission to delete this app");
+      return;
+    }
+
+    // 2change the selected app to update the data in the local storage
+  }
+
+  const reject = () => {};
+  const confirmRemove = () => {
+    confirmDialog({
+      message: `Are you sure you want to remove the app`,
+      header: "Delete Confirmation",
+      icon: <FontAwesomeIcon icon={faWarning} />,
+      accept,
+      reject,
+    });
+  };
 
   return (
     <>
@@ -32,6 +76,9 @@ const SelectAppDropDown = ({
         </>
       ) : (
         <>
+
+          <ConfirmDialog />
+
           <div className="text-main_dark rounded-md p-2 hover:bg-blue_gray transition-colors flex gap-8 items-center cursor-pointer">
             {apps_of_user[selectedAppIndex] && (
               <Dropdown
@@ -77,6 +124,13 @@ const SelectAppDropDown = ({
                   <div className="flex items-center gap-2">
                     <FontAwesomeIcon icon={faAdd} />
                     <span>Add New App</span>
+                  </div>
+                </Dropdown.Item>{" "}
+                <Dropdown.Divider />
+                <Dropdown.Item className="" onClick={confirmRemove}>
+                  <div className="flex items-center gap-2">
+                    <FontAwesomeIcon icon={faTrash} />
+                    <span>Remove The Current App</span>
                   </div>
                 </Dropdown.Item>{" "}
               </Dropdown>

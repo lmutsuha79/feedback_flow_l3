@@ -1,4 +1,6 @@
+import Footer from "@/components/landing-page-comp/footer";
 import HowItWorksGridItem from "@/components/landing-page-comp/how-it-work-grid-item";
+import LandingPageNav from "@/components/landing-page-comp/landing-page-nav";
 import DropdownMenuDemo from "@/components/ui/drop-down-menu";
 import {
   faCode,
@@ -18,54 +20,7 @@ export default function Home() {
   return (
     <>
       <header>
-        <nav className="px-8 py-4">
-          {/* logo */}
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-8">
-              <Image
-                src={"/images/logo-black-mini.png"}
-                alt="logo_feedback_flow"
-                width={100}
-                height={50}
-                draggable="false"
-                // className="h-[120px]"
-              />
-              <div className="space-x-4">
-                <Link
-                  className="text-main_text hover:text-main_dark font-medium transition-colors"
-                  href={"#"}
-                >
-                  Home
-                </Link>
-                <Link
-                  className="text-main_text hover:text-main_dark font-medium transition-colors"
-                  href={"#"}
-                >
-                  Features
-                </Link>
-                <Link
-                  className="text-main_text hover:text-main_dark font-medium transition-colors"
-                  href={"#"}
-                >
-                  Pricing
-                </Link>
-                <Link
-                  className="text-main_text hover:text-main_dark font-medium transition-colors"
-                  href={"#"}
-                >
-                  About
-                </Link>
-              </div>
-            </div>
-
-            <Button className="bg-main_dark hover:bg-main_dark hover:scale-105 transform transition-transform">
-              <Link className="space-x-2" href={"/dashboard"}>
-                <FontAwesomeIcon className="text-white" icon={faDashboard} />
-                <span className="text-white">Get Started</span>
-              </Link>
-            </Button>
-          </div>
-        </nav>
+        <LandingPageNav active={"home"} />
       </header>
       <main>
         {/* hero section */}
@@ -224,54 +179,7 @@ Stay ahead of the competition and make data-driven decisions with ease.`}
           </div>
         </section> */}
       </main>
-      <footer>
-        <div className="mx-8 py-4 mt-[100px]">
-          <div className="flex flex-col justify-center items-center gap-2">
-            <Image
-              src={"/images/logo-black-mini.png"}
-              alt="logo_feedback_flow"
-              width={100}
-              height={50}
-              draggable="false"
-              // className="h-[120px]"
-            />
-            <p className="text-main_dark ">
-              Built by{" "}
-              <Link
-                href={"https://github.com/lmutsuha79/"}
-                className="font-medium"
-                target="__blank"
-              >
-                lmutsuha79 & zino
-              </Link>
-              . Hosted on{" "}
-              <Link
-                href={"https://vercel.com/"}
-                className="font-medium"
-                target="__blank"
-              >
-                varcel
-              </Link>
-              . Illustrations by{" "}
-              <Link
-                href={"https://storyset.com/"}
-                className="font-medium"
-                target="__blank"
-              >
-                storyset
-              </Link>
-              . The source code is available on{" "}
-              <Link
-                href={"https://github.com/lmutsuha79/feedback_flow_l3"}
-                className="font-medium"
-                target="__blank"
-              >
-                Github
-              </Link>
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
