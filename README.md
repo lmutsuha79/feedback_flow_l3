@@ -1,6 +1,6 @@
 # Feedback Flow
 
-![FeedbackFlow]("/images/logo-black-mini.png")
+![FeedbackFlow](/public//images/logo-black-mini.png)
 
 ## Description
 
