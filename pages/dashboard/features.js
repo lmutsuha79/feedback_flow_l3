@@ -26,7 +26,7 @@ const features = () => {
             color="in"
             aria-label="Info spinner example"
           />{" "}
-          <span className="text-main_dark">Loading the bugs ...</span>
+          <span className="text-main_dark">Loading the features ...</span>
         </div>
       )}
     </DashboardLayout>

@@ -51,7 +51,7 @@ export default function Home() {
               </div>
               <div className="flex gap-4 items-center">
                 <Button className="bg-main_dark hover:bg-main_dark hover:scale-105 transform transition-transform">
-                  <Link className="space-x-2" href={"/dashboard"}>
+                  <Link className="space-x-2" href={"/dashboard/reviews"}>
                     {" "}
                     <FontAwesomeIcon
                       className="text-white"

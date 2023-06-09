@@ -6,6 +6,7 @@ import NumbersContainer from "@/components/overview-components/numbers-container
 import ReviewsShower from "@/components/overview-components/reviews-shower";
 import useLocalStorage from "use-local-storage";
 import GptOverView from "@/components/overview-components/gpt-overview";
+import ChartSentiments from "@/components/overview-components/chart-sentiments";
 
 const Dashboard = () => {
   const [chartData, setChartData] = useState({});
@@ -96,6 +97,7 @@ const Dashboard = () => {
         <div className="mt-8 h-[500px] overflow-scroll flex items-center gap-8 ">
           <div className="w-[60%] h-full border border-slate-200 shadow-lg p-8 rounded-md">
             {/* <EmotionCircleChart sentimentCounter={sentimentCounter} /> */}
+            <ChartSentiments sentimentCounter={sentimentCounter} />
           </div>
 
           {/* recent feedbacks */}

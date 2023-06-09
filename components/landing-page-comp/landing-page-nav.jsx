@@ -51,7 +51,7 @@ const LandingPageNav = ({ active }) => {
         </div>
 
         <Button className="bg-main_dark hover:bg-main_dark hover:scale-105 transform transition-transform">
-          <Link className="space-x-2" href={"/dashboard"}>
+          <Link className="space-x-2" href={"/dashboard/reviews"}>
             <FontAwesomeIcon className="text-white" icon={faDashboard} />
             <span className="text-white">Get Started</span>
           </Link>
